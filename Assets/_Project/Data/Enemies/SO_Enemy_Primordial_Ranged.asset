@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b68f0c118069a694fa2d606899ce9076, type: 3}
+  m_Name: SO_Enemy_Primordial_Ranged
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Enemies.Data.EnemyDefinition
+  id: SO_Enemy_Primordial_Ranged
+  displayName: Primordial Spitter
+  archetype: 1
+  prefab: {fileID: 2502826602850496382, guid: f6cd828e106787b4d9dbf9f7b3d98419, type: 3}
+  maxHp: 20
+  moveSpeed: 2.5
+  contactDamage: 5
+  resistances:
+    _tags: []
+  weaknesses:
+    _tags: []
+  aiBehaviour: {fileID: 11400000, guid: f33cb2aa402f6904cb8a8704bf45edd6, type: 2}
+  debugColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

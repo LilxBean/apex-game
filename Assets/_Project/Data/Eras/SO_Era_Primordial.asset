@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6242eeff075fe5e4698eb2cf14a2d63b, type: 3}
+  m_Name: SO_Era_Primordial
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Enemies.Data.EraDefinition
+  id: primordial
+  displayName: Primordial
+  index: 0
+  spawnTable:
+  - definition: {fileID: 11400000, guid: 4ceb835d623273d438c9e6e89a1e93c5, type: 2}
+    weight: 50
+  - definition: {fileID: 11400000, guid: 41ec02b77620317489a05d1271fce7e1, type: 2}
+    weight: 25
+  - definition: {fileID: 11400000, guid: c2b17478e3d949a4abd3b9be016b24bf, type: 2}
+    weight: 15
+  - definition: {fileID: 11400000, guid: ccec965dcd281f548855b238e6368783, type: 2}
+    weight: 8
+  - definition: {fileID: 11400000, guid: 1654bd1002807414a93768c5e232609a, type: 2}
+    weight: 2
+  spawnRateOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 60
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 120
+      value: 3
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 180
+      value: 4
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

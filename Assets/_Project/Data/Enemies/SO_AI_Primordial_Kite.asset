@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fcaa1a6e42b874db912d5af3448174, type: 3}
+  m_Name: SO_AI_Primordial_Kite
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Enemies.AI.KiteRangedAI
+  preferredDistance: 6
+  fireCooldown: 2
+  projectileSpeed: 8
+  projectileDamage: 5
+  projectileLifetime: 4
+  projectilePrefab: {fileID: 5452586857825202794, guid: f35f09e0c9bc3db4ea7080ece7ccb33a, type: 3}

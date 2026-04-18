@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b68f0c118069a694fa2d606899ce9076, type: 3}
+  m_Name: SO_Enemy_Primordial_Boss
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Enemies.Data.EnemyDefinition
+  id: SO_Enemy_Primordial_Boss
+  displayName: Primordial Leviathan
+  archetype: 4
+  prefab: {fileID: 2502826602850496382, guid: f6cd828e106787b4d9dbf9f7b3d98419, type: 3}
+  maxHp: 500
+  moveSpeed: 1.5
+  contactDamage: 25
+  resistances:
+    _tags: []
+  weaknesses:
+    _tags: []
+  aiBehaviour: {fileID: 11400000, guid: e31213e2cbae3844d8fa8ab597ab27e1, type: 2}
+  debugColor: {r: 1, g: 1, b: 1, a: 1}
