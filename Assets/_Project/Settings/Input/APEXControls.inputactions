@@ -147,6 +147,42 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Combat",
+            "id": "c0bbc0bb-0000-0000-0000-000000000001",
+            "actions": [
+                { "name": "Attack1", "type": "Button", "id": "c0bb0001-0000-0000-0000-000000000001", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Attack2", "type": "Button", "id": "c0bb0001-0000-0000-0000-000000000002", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Attack3", "type": "Button", "id": "c0bb0001-0000-0000-0000-000000000003", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Attack4", "type": "Button", "id": "c0bb0001-0000-0000-0000-000000000004", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "ToggleAuto1", "type": "Button", "id": "c0bb0002-0000-0000-0000-000000000001", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "ToggleAuto2", "type": "Button", "id": "c0bb0002-0000-0000-0000-000000000002", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "ToggleAuto3", "type": "Button", "id": "c0bb0002-0000-0000-0000-000000000003", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "ToggleAuto4", "type": "Button", "id": "c0bb0002-0000-0000-0000-000000000004", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false }
+            ],
+            "bindings": [
+                { "name": "", "id": "c0bbb001-0000-0000-0000-000000000001", "path": "<Keyboard>/1", "interactions": "", "processors": "", "groups": "", "action": "Attack1", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "c0bbb001-0000-0000-0000-000000000002", "path": "<Keyboard>/2", "interactions": "", "processors": "", "groups": "", "action": "Attack2", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "c0bbb001-0000-0000-0000-000000000003", "path": "<Keyboard>/3", "interactions": "", "processors": "", "groups": "", "action": "Attack3", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "c0bbb001-0000-0000-0000-000000000004", "path": "<Keyboard>/4", "interactions": "", "processors": "", "groups": "", "action": "Attack4", "isComposite": false, "isPartOfComposite": false },
+
+                { "name": "Shift+1", "id": "c0bbb002-0000-0000-0000-00000000000a", "path": "OneModifier", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto1", "isComposite": true, "isPartOfComposite": false },
+                { "name": "modifier", "id": "c0bbb002-0000-0000-0000-00000000000b", "path": "<Keyboard>/shift", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto1", "isComposite": false, "isPartOfComposite": true },
+                { "name": "binding", "id": "c0bbb002-0000-0000-0000-00000000000c", "path": "<Keyboard>/1", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto1", "isComposite": false, "isPartOfComposite": true },
+
+                { "name": "Shift+2", "id": "c0bbb002-0000-0000-0000-00000000001a", "path": "OneModifier", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto2", "isComposite": true, "isPartOfComposite": false },
+                { "name": "modifier", "id": "c0bbb002-0000-0000-0000-00000000001b", "path": "<Keyboard>/shift", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto2", "isComposite": false, "isPartOfComposite": true },
+                { "name": "binding", "id": "c0bbb002-0000-0000-0000-00000000001c", "path": "<Keyboard>/2", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto2", "isComposite": false, "isPartOfComposite": true },
+
+                { "name": "Shift+3", "id": "c0bbb002-0000-0000-0000-00000000002a", "path": "OneModifier", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto3", "isComposite": true, "isPartOfComposite": false },
+                { "name": "modifier", "id": "c0bbb002-0000-0000-0000-00000000002b", "path": "<Keyboard>/shift", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto3", "isComposite": false, "isPartOfComposite": true },
+                { "name": "binding", "id": "c0bbb002-0000-0000-0000-00000000002c", "path": "<Keyboard>/3", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto3", "isComposite": false, "isPartOfComposite": true },
+
+                { "name": "Shift+4", "id": "c0bbb002-0000-0000-0000-00000000003a", "path": "OneModifier", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto4", "isComposite": true, "isPartOfComposite": false },
+                { "name": "modifier", "id": "c0bbb002-0000-0000-0000-00000000003b", "path": "<Keyboard>/shift", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto4", "isComposite": false, "isPartOfComposite": true },
+                { "name": "binding", "id": "c0bbb002-0000-0000-0000-00000000003c", "path": "<Keyboard>/4", "interactions": "", "processors": "", "groups": "", "action": "ToggleAuto4", "isComposite": false, "isPartOfComposite": true }
+            ]
         }
     ],
     "controlSchemes": []

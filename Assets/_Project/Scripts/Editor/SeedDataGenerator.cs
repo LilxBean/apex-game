@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using APEX.Combat.Attacks;
 using APEX.Enemies.AI;
 using APEX.Enemies.Data;
+using APEX.Player;
 using APEX.Tags;
 using UnityEditor;
 using UnityEngine;
@@ -21,6 +23,7 @@ namespace APEX.Editor
             GenerateEnemyPrefabs();
             GenerateEnemyDefinitions();
             GenerateEraDefinition();
+            GeneratePlayerAndAttacks();
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -33,7 +36,7 @@ namespace APEX.Editor
             {
                 "Physical", "Fire", "Acid", "Ice", "Spikey", "Burn", "Bleed",
                 "Poison", "Melee", "Freeze", "Projectile", "Area", "Persistent",
-                "OnHit", "OnKill"
+                "Nova", "OnHit", "OnKill"
             };
 
             EnsureFolder("Assets/_Project/Data/Tags");
@@ -255,6 +258,287 @@ namespace APEX.Editor
 
             AssetDatabase.CreateAsset(era, path);
         }
+
+        // --- Player + attacks --------------------------------------------------
+
+        private static void GeneratePlayerAndAttacks()
+        {
+            EnsureFolder("Assets/_Project/Data/Player");
+            EnsureFolder("Assets/_Project/Data/Attacks");
+            EnsureFolder("Assets/_Project/Prefabs/Player");
+            EnsureFolder("Assets/_Project/Prefabs/VFX");
+
+            var stats = CreatePlayerStats();
+            var spore = CreateSporeProjectilePrefab();
+            var pulseRing = CreatePulseRingPrefab();
+            var fieldPrefab = CreateCorrosiveFieldPrefab();
+
+            var lunge = CreateLungeAttack();
+            var spit = CreateSpitAttack(spore);
+            var pulse = CreatePulseAttack(pulseRing);
+            var field = CreateFieldAttack(fieldPrefab);
+
+            CreatePlayerPrefab(stats, new AttackDefinition[] { lunge, spit, pulse, field });
+        }
+
+        private static PlayerStats CreatePlayerStats()
+        {
+            string path = "Assets/_Project/Data/Player/PlayerStats_Default.asset";
+            var existing = AssetDatabase.LoadAssetAtPath<PlayerStats>(path);
+            if (existing != null) return existing;
+
+            var stats = ScriptableObject.CreateInstance<PlayerStats>();
+            stats.maxHp = 60f;
+            stats.moveSpeed = 6f;
+            stats.passiveStreamEnabled = true;
+            stats.passiveBiteRadius = 1.2f;
+            stats.passiveBiteIntervalSeconds = 0.25f;
+            stats.passiveBiteDamage = 3f;
+            stats.passiveBiteTags = BuildTagSet("Melee", "Physical");
+
+            AssetDatabase.CreateAsset(stats, path);
+            return stats;
+        }
+
+        private static LungeAttack CreateLungeAttack()
+        {
+            string path = "Assets/_Project/Data/Attacks/SO_Attack_Lunge_Default.asset";
+            var existing = AssetDatabase.LoadAssetAtPath<LungeAttack>(path);
+            if (existing != null) return existing;
+
+            var a = ScriptableObject.CreateInstance<LungeAttack>();
+            a.id = "attack.lunge.default";
+            a.displayName = "Lunge";
+            a.baseCooldownSeconds = 1.2f;
+            a.baseDamage = 20f;
+            a.tags = BuildTagSet("Melee", "Physical");
+            a.autoFireByDefault = true;
+            a.lungeDistance = 4f;
+            a.lungeDurationSeconds = 0.18f;
+            a.lungeHitboxSize = new Vector2(2f, 1.2f);
+            a.lungeAcquireRadius = 6f;
+
+            AssetDatabase.CreateAsset(a, path);
+            return a;
+        }
+
+        private static SpitAttack CreateSpitAttack(GameObject projectilePrefab)
+        {
+            string path = "Assets/_Project/Data/Attacks/SO_Attack_Spit_Default.asset";
+            var existing = AssetDatabase.LoadAssetAtPath<SpitAttack>(path);
+            if (existing != null)
+            {
+                if (existing.projectilePrefab == null && projectilePrefab != null)
+                {
+                    existing.projectilePrefab = projectilePrefab;
+                    EditorUtility.SetDirty(existing);
+                }
+                return existing;
+            }
+
+            var a = ScriptableObject.CreateInstance<SpitAttack>();
+            a.id = "attack.spit.default";
+            a.displayName = "Acid Spit";
+            a.baseCooldownSeconds = 0.9f;
+            a.baseDamage = 8f;
+            a.tags = BuildTagSet("Projectile", "Acid");
+            a.autoFireByDefault = true;
+            a.projectilePrefab = projectilePrefab;
+            a.spitProjectileSpeed = 12f;
+            a.spitProjectileLifetime = 2.5f;
+            a.spitAcquireRadius = 12f;
+
+            AssetDatabase.CreateAsset(a, path);
+            return a;
+        }
+
+        private static PulseAttack CreatePulseAttack(GameObject pulseRingPrefab)
+        {
+            string path = "Assets/_Project/Data/Attacks/SO_Attack_Pulse_Default.asset";
+            var existing = AssetDatabase.LoadAssetAtPath<PulseAttack>(path);
+            if (existing != null)
+            {
+                if (existing.vfxPrefab == null && pulseRingPrefab != null)
+                {
+                    existing.vfxPrefab = pulseRingPrefab;
+                    EditorUtility.SetDirty(existing);
+                }
+                return existing;
+            }
+
+            var a = ScriptableObject.CreateInstance<PulseAttack>();
+            a.id = "attack.pulse.default";
+            a.displayName = "Radial Pulse";
+            a.baseCooldownSeconds = 2.5f;
+            a.baseDamage = 25f;
+            a.tags = BuildTagSet("Nova", "Physical");
+            a.autoFireByDefault = true;
+            a.vfxPrefab = pulseRingPrefab;
+            a.windupSeconds = 0.15f;
+            a.pulseRadius = 4.5f;
+            a.knockbackImpulse = 8f;
+            a.visualDurationSeconds = 0.3f;
+
+            AssetDatabase.CreateAsset(a, path);
+            return a;
+        }
+
+        private static FieldAttack CreateFieldAttack(GameObject fieldPrefab)
+        {
+            string path = "Assets/_Project/Data/Attacks/SO_Attack_Field_Default.asset";
+            var existing = AssetDatabase.LoadAssetAtPath<FieldAttack>(path);
+            if (existing != null)
+            {
+                if (existing.fieldPrefab == null && fieldPrefab != null)
+                {
+                    existing.fieldPrefab = fieldPrefab;
+                    EditorUtility.SetDirty(existing);
+                }
+                return existing;
+            }
+
+            var a = ScriptableObject.CreateInstance<FieldAttack>();
+            a.id = "attack.field.default";
+            a.displayName = "Corrosive Field";
+            a.baseCooldownSeconds = 5f;
+            a.baseDamage = 8f; // DPS
+            a.tags = BuildTagSet("Area", "Persistent", "Acid");
+            a.autoFireByDefault = true;
+            a.fieldPrefab = fieldPrefab;
+            a.fieldRadius = 2.5f;
+            a.fieldDurationSeconds = 4f;
+            a.fieldTickIntervalSeconds = 0.5f;
+
+            AssetDatabase.CreateAsset(a, path);
+            return a;
+        }
+
+        private static GameObject CreateSporeProjectilePrefab()
+        {
+            string path = "Assets/_Project/Prefabs/Projectiles/P_SporeProjectile.prefab";
+            var existing = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (existing != null) return existing;
+
+            var go = new GameObject("P_SporeProjectile");
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
+            sr.color = new Color(0.9f, 0.85f, 0.2f);
+            go.transform.localScale = new Vector3(0.3f, 0.3f, 1f);
+
+            var rb = go.AddComponent<Rigidbody2D>();
+            rb.gravityScale = 0f;
+
+            var col = go.AddComponent<CircleCollider2D>();
+            col.isTrigger = true;
+            col.radius = 0.5f; // local space — world-radius ~= 0.15 after scale
+
+            go.AddComponent<SporeProjectile>();
+
+            var asset = PrefabUtility.SaveAsPrefabAsset(go, path);
+            Object.DestroyImmediate(go);
+            return asset;
+        }
+
+        private static GameObject CreatePulseRingPrefab()
+        {
+            string path = "Assets/_Project/Prefabs/VFX/P_PulseRing.prefab";
+            var existing = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (existing != null) return existing;
+
+            var go = new GameObject("P_PulseRing");
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
+            sr.color = new Color(1f, 1f, 1f, 0.35f);
+            go.transform.localScale = Vector3.zero;
+
+            go.AddComponent<PulseVisual>();
+
+            var asset = PrefabUtility.SaveAsPrefabAsset(go, path);
+            Object.DestroyImmediate(go);
+            return asset;
+        }
+
+        private static GameObject CreateCorrosiveFieldPrefab()
+        {
+            string path = "Assets/_Project/Prefabs/VFX/P_CorrosiveField.prefab";
+            var existing = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (existing != null) return existing;
+
+            var go = new GameObject("P_CorrosiveField");
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
+            sr.color = new Color(0.2f, 0.8f, 0.3f, 0.4f);
+            sr.sortingOrder = -1;
+
+            var col = go.AddComponent<CircleCollider2D>();
+            col.isTrigger = true;
+            col.radius = 1f;
+
+            go.AddComponent<CorrosiveField>();
+
+            var asset = PrefabUtility.SaveAsPrefabAsset(go, path);
+            Object.DestroyImmediate(go);
+            return asset;
+        }
+
+        private static void CreatePlayerPrefab(PlayerStats stats, AttackDefinition[] attacks)
+        {
+            string path = "Assets/_Project/Prefabs/Player/P_Player.prefab";
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(path) != null) return;
+
+            var go = new GameObject("P_Player");
+            go.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
+
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
+            sr.color = new Color(0.55f, 0.95f, 0.55f); // light green
+            sr.sortingOrder = 5;
+
+            var rb = go.AddComponent<Rigidbody2D>();
+            rb.gravityScale = 0f;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+            var col = go.AddComponent<CircleCollider2D>();
+            col.radius = 0.5f;
+
+            go.AddComponent<APEX.Combat.Health>();
+            var controller = go.AddComponent<PlayerController>();
+            var combat = go.AddComponent<PlayerCombat>();
+            go.AddComponent<APEX.Combat.Attacks.Passive.PassiveMeleeStream>();
+            go.AddComponent<APEX.Testing.DebugDamageDealer>();
+
+            // Wire private serialized fields
+            var ctrlSO = new SerializedObject(controller);
+            ctrlSO.FindProperty("_stats").objectReferenceValue = stats;
+            ctrlSO.ApplyModifiedPropertiesWithoutUndo();
+
+            var combatSO = new SerializedObject(combat);
+            var defs = combatSO.FindProperty("_attackDefinitions");
+            defs.arraySize = attacks.Length;
+            for (int i = 0; i < attacks.Length; i++)
+            {
+                defs.GetArrayElementAtIndex(i).objectReferenceValue = attacks[i];
+            }
+            combatSO.ApplyModifiedPropertiesWithoutUndo();
+
+            PrefabUtility.SaveAsPrefabAsset(go, path);
+            Object.DestroyImmediate(go);
+        }
+
+        private static TagSet BuildTagSet(params string[] tagIds)
+        {
+            var list = new List<TagDefinition>();
+            foreach (var id in tagIds)
+            {
+                var tag = AssetDatabase.LoadAssetAtPath<TagDefinition>(
+                    $"Assets/_Project/Data/Tags/SO_Tag_{id}.asset");
+                if (tag != null) list.Add(tag);
+            }
+            return new TagSet(list);
+        }
+
+        // --- Misc --------------------------------------------------------------
 
         private static void EnsureFolder(string path)
         {

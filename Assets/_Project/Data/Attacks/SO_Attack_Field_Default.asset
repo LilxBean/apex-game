@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79f9abaa38055934a917bad347674229, type: 3}
+  m_Name: SO_Attack_Field_Default
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Combat.Attacks.FieldAttack
+  id: attack.field.default
+  displayName: Corrosive Field
+  baseCooldownSeconds: 5
+  baseDamage: 8
+  tags:
+    _tags:
+    - {fileID: 11400000, guid: 785531b0a2ac41640a679d743e595f36, type: 2}
+    - {fileID: 11400000, guid: 8f5b659abb1f86945a73a1fd652636e3, type: 2}
+    - {fileID: 11400000, guid: c5ae05ed9c04e794aa3a3c8fd5e50eb3, type: 2}
+  vfxPrefab: {fileID: 0}
+  autoFireByDefault: 1
+  fieldPrefab: {fileID: 889601515005783783, guid: f3df36e8154bd19488af51d743e5609d, type: 3}
+  fieldRadius: 2.5
+  fieldDurationSeconds: 4
+  fieldTickIntervalSeconds: 0.5

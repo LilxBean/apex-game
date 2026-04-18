@@ -173,6 +173,42 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Combat"",
+            ""id"": ""c0bbc0bb-0000-0000-0000-000000000001"",
+            ""actions"": [
+                { ""name"": ""Attack1"", ""type"": ""Button"", ""id"": ""c0bb0001-0000-0000-0000-000000000001"", ""expectedControlType"": ""Button"", ""processors"": """", ""interactions"": """", ""initialStateCheck"": false },
+                { ""name"": ""Attack2"", ""type"": ""Button"", ""id"": ""c0bb0001-0000-0000-0000-000000000002"", ""expectedControlType"": ""Button"", ""processors"": """", ""interactions"": """", ""initialStateCheck"": false },
+                { ""name"": ""Attack3"", ""type"": ""Button"", ""id"": ""c0bb0001-0000-0000-0000-000000000003"", ""expectedControlType"": ""Button"", ""processors"": """", ""interactions"": """", ""initialStateCheck"": false },
+                { ""name"": ""Attack4"", ""type"": ""Button"", ""id"": ""c0bb0001-0000-0000-0000-000000000004"", ""expectedControlType"": ""Button"", ""processors"": """", ""interactions"": """", ""initialStateCheck"": false },
+                { ""name"": ""ToggleAuto1"", ""type"": ""Button"", ""id"": ""c0bb0002-0000-0000-0000-000000000001"", ""expectedControlType"": ""Button"", ""processors"": """", ""interactions"": """", ""initialStateCheck"": false },
+                { ""name"": ""ToggleAuto2"", ""type"": ""Button"", ""id"": ""c0bb0002-0000-0000-0000-000000000002"", ""expectedControlType"": ""Button"", ""processors"": """", ""interactions"": """", ""initialStateCheck"": false },
+                { ""name"": ""ToggleAuto3"", ""type"": ""Button"", ""id"": ""c0bb0002-0000-0000-0000-000000000003"", ""expectedControlType"": ""Button"", ""processors"": """", ""interactions"": """", ""initialStateCheck"": false },
+                { ""name"": ""ToggleAuto4"", ""type"": ""Button"", ""id"": ""c0bb0002-0000-0000-0000-000000000004"", ""expectedControlType"": ""Button"", ""processors"": """", ""interactions"": """", ""initialStateCheck"": false }
+            ],
+            ""bindings"": [
+                { ""name"": """", ""id"": ""c0bbb001-0000-0000-0000-000000000001"", ""path"": ""<Keyboard>/1"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""Attack1"", ""isComposite"": false, ""isPartOfComposite"": false },
+                { ""name"": """", ""id"": ""c0bbb001-0000-0000-0000-000000000002"", ""path"": ""<Keyboard>/2"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""Attack2"", ""isComposite"": false, ""isPartOfComposite"": false },
+                { ""name"": """", ""id"": ""c0bbb001-0000-0000-0000-000000000003"", ""path"": ""<Keyboard>/3"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""Attack3"", ""isComposite"": false, ""isPartOfComposite"": false },
+                { ""name"": """", ""id"": ""c0bbb001-0000-0000-0000-000000000004"", ""path"": ""<Keyboard>/4"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""Attack4"", ""isComposite"": false, ""isPartOfComposite"": false },
+
+                { ""name"": ""Shift+1"", ""id"": ""c0bbb002-0000-0000-0000-00000000000a"", ""path"": ""OneModifier"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto1"", ""isComposite"": true, ""isPartOfComposite"": false },
+                { ""name"": ""modifier"", ""id"": ""c0bbb002-0000-0000-0000-00000000000b"", ""path"": ""<Keyboard>/shift"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto1"", ""isComposite"": false, ""isPartOfComposite"": true },
+                { ""name"": ""binding"", ""id"": ""c0bbb002-0000-0000-0000-00000000000c"", ""path"": ""<Keyboard>/1"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto1"", ""isComposite"": false, ""isPartOfComposite"": true },
+
+                { ""name"": ""Shift+2"", ""id"": ""c0bbb002-0000-0000-0000-00000000001a"", ""path"": ""OneModifier"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto2"", ""isComposite"": true, ""isPartOfComposite"": false },
+                { ""name"": ""modifier"", ""id"": ""c0bbb002-0000-0000-0000-00000000001b"", ""path"": ""<Keyboard>/shift"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto2"", ""isComposite"": false, ""isPartOfComposite"": true },
+                { ""name"": ""binding"", ""id"": ""c0bbb002-0000-0000-0000-00000000001c"", ""path"": ""<Keyboard>/2"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto2"", ""isComposite"": false, ""isPartOfComposite"": true },
+
+                { ""name"": ""Shift+3"", ""id"": ""c0bbb002-0000-0000-0000-00000000002a"", ""path"": ""OneModifier"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto3"", ""isComposite"": true, ""isPartOfComposite"": false },
+                { ""name"": ""modifier"", ""id"": ""c0bbb002-0000-0000-0000-00000000002b"", ""path"": ""<Keyboard>/shift"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto3"", ""isComposite"": false, ""isPartOfComposite"": true },
+                { ""name"": ""binding"", ""id"": ""c0bbb002-0000-0000-0000-00000000002c"", ""path"": ""<Keyboard>/3"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto3"", ""isComposite"": false, ""isPartOfComposite"": true },
+
+                { ""name"": ""Shift+4"", ""id"": ""c0bbb002-0000-0000-0000-00000000003a"", ""path"": ""OneModifier"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto4"", ""isComposite"": true, ""isPartOfComposite"": false },
+                { ""name"": ""modifier"", ""id"": ""c0bbb002-0000-0000-0000-00000000003b"", ""path"": ""<Keyboard>/shift"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto4"", ""isComposite"": false, ""isPartOfComposite"": true },
+                { ""name"": ""binding"", ""id"": ""c0bbb002-0000-0000-0000-00000000003c"", ""path"": ""<Keyboard>/4"", ""interactions"": """", ""processors"": """", ""groups"": """", ""action"": ""ToggleAuto4"", ""isComposite"": false, ""isPartOfComposite"": true }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -181,11 +217,22 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_DebugAttack = m_Gameplay.FindAction("DebugAttack", throwIfNotFound: true);
+        // Combat
+        m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
+        m_Combat_Attack1 = m_Combat.FindAction("Attack1", throwIfNotFound: true);
+        m_Combat_Attack2 = m_Combat.FindAction("Attack2", throwIfNotFound: true);
+        m_Combat_Attack3 = m_Combat.FindAction("Attack3", throwIfNotFound: true);
+        m_Combat_Attack4 = m_Combat.FindAction("Attack4", throwIfNotFound: true);
+        m_Combat_ToggleAuto1 = m_Combat.FindAction("ToggleAuto1", throwIfNotFound: true);
+        m_Combat_ToggleAuto2 = m_Combat.FindAction("ToggleAuto2", throwIfNotFound: true);
+        m_Combat_ToggleAuto3 = m_Combat.FindAction("ToggleAuto3", throwIfNotFound: true);
+        m_Combat_ToggleAuto4 = m_Combat.FindAction("ToggleAuto4", throwIfNotFound: true);
     }
 
     ~@APEXControls()
     {
         UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, APEXControls.Gameplay.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Combat.enabled, "This will cause a leak and performance issues, APEXControls.Combat.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -315,5 +362,150 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnDebugAttack(InputAction.CallbackContext context);
+    }
+
+    // Combat
+    private readonly InputActionMap m_Combat;
+    private readonly InputAction m_Combat_Attack1;
+    private readonly InputAction m_Combat_Attack2;
+    private readonly InputAction m_Combat_Attack3;
+    private readonly InputAction m_Combat_Attack4;
+    private readonly InputAction m_Combat_ToggleAuto1;
+    private readonly InputAction m_Combat_ToggleAuto2;
+    private readonly InputAction m_Combat_ToggleAuto3;
+    private readonly InputAction m_Combat_ToggleAuto4;
+    private List<ICombatActions> m_CombatActionsCallbackInterfaces = new List<ICombatActions>();
+
+    public struct CombatActions
+    {
+        private @APEXControls m_Wrapper;
+
+        public CombatActions(@APEXControls wrapper) { m_Wrapper = wrapper; }
+
+        public InputAction @Attack1 => m_Wrapper.m_Combat_Attack1;
+        public InputAction @Attack2 => m_Wrapper.m_Combat_Attack2;
+        public InputAction @Attack3 => m_Wrapper.m_Combat_Attack3;
+        public InputAction @Attack4 => m_Wrapper.m_Combat_Attack4;
+        public InputAction @ToggleAuto1 => m_Wrapper.m_Combat_ToggleAuto1;
+        public InputAction @ToggleAuto2 => m_Wrapper.m_Combat_ToggleAuto2;
+        public InputAction @ToggleAuto3 => m_Wrapper.m_Combat_ToggleAuto3;
+        public InputAction @ToggleAuto4 => m_Wrapper.m_Combat_ToggleAuto4;
+
+        public InputActionMap Get() { return m_Wrapper.m_Combat; }
+
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+
+        public bool enabled => Get().enabled;
+
+        public static implicit operator InputActionMap(CombatActions set) { return set.Get(); }
+
+        public void AddCallbacks(ICombatActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CombatActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CombatActionsCallbackInterfaces.Add(instance);
+            @Attack1.started += instance.OnAttack1;
+            @Attack1.performed += instance.OnAttack1;
+            @Attack1.canceled += instance.OnAttack1;
+            @Attack2.started += instance.OnAttack2;
+            @Attack2.performed += instance.OnAttack2;
+            @Attack2.canceled += instance.OnAttack2;
+            @Attack3.started += instance.OnAttack3;
+            @Attack3.performed += instance.OnAttack3;
+            @Attack3.canceled += instance.OnAttack3;
+            @Attack4.started += instance.OnAttack4;
+            @Attack4.performed += instance.OnAttack4;
+            @Attack4.canceled += instance.OnAttack4;
+            @ToggleAuto1.started += instance.OnToggleAuto1;
+            @ToggleAuto1.performed += instance.OnToggleAuto1;
+            @ToggleAuto1.canceled += instance.OnToggleAuto1;
+            @ToggleAuto2.started += instance.OnToggleAuto2;
+            @ToggleAuto2.performed += instance.OnToggleAuto2;
+            @ToggleAuto2.canceled += instance.OnToggleAuto2;
+            @ToggleAuto3.started += instance.OnToggleAuto3;
+            @ToggleAuto3.performed += instance.OnToggleAuto3;
+            @ToggleAuto3.canceled += instance.OnToggleAuto3;
+            @ToggleAuto4.started += instance.OnToggleAuto4;
+            @ToggleAuto4.performed += instance.OnToggleAuto4;
+            @ToggleAuto4.canceled += instance.OnToggleAuto4;
+        }
+
+        public void RemoveCallbacks(ICombatActions instance)
+        {
+            if (m_Wrapper.m_CombatActionsCallbackInterfaces.Remove(instance))
+            {
+                @Attack1.started -= instance.OnAttack1;
+                @Attack1.performed -= instance.OnAttack1;
+                @Attack1.canceled -= instance.OnAttack1;
+                @Attack2.started -= instance.OnAttack2;
+                @Attack2.performed -= instance.OnAttack2;
+                @Attack2.canceled -= instance.OnAttack2;
+                @Attack3.started -= instance.OnAttack3;
+                @Attack3.performed -= instance.OnAttack3;
+                @Attack3.canceled -= instance.OnAttack3;
+                @Attack4.started -= instance.OnAttack4;
+                @Attack4.performed -= instance.OnAttack4;
+                @Attack4.canceled -= instance.OnAttack4;
+                @ToggleAuto1.started -= instance.OnToggleAuto1;
+                @ToggleAuto1.performed -= instance.OnToggleAuto1;
+                @ToggleAuto1.canceled -= instance.OnToggleAuto1;
+                @ToggleAuto2.started -= instance.OnToggleAuto2;
+                @ToggleAuto2.performed -= instance.OnToggleAuto2;
+                @ToggleAuto2.canceled -= instance.OnToggleAuto2;
+                @ToggleAuto3.started -= instance.OnToggleAuto3;
+                @ToggleAuto3.performed -= instance.OnToggleAuto3;
+                @ToggleAuto3.canceled -= instance.OnToggleAuto3;
+                @ToggleAuto4.started -= instance.OnToggleAuto4;
+                @ToggleAuto4.performed -= instance.OnToggleAuto4;
+                @ToggleAuto4.canceled -= instance.OnToggleAuto4;
+            }
+        }
+
+        public void SetCallbacks(ICombatActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CombatActionsCallbackInterfaces)
+            {
+                @Attack1.started -= item.OnAttack1;
+                @Attack1.performed -= item.OnAttack1;
+                @Attack1.canceled -= item.OnAttack1;
+                @Attack2.started -= item.OnAttack2;
+                @Attack2.performed -= item.OnAttack2;
+                @Attack2.canceled -= item.OnAttack2;
+                @Attack3.started -= item.OnAttack3;
+                @Attack3.performed -= item.OnAttack3;
+                @Attack3.canceled -= item.OnAttack3;
+                @Attack4.started -= item.OnAttack4;
+                @Attack4.performed -= item.OnAttack4;
+                @Attack4.canceled -= item.OnAttack4;
+                @ToggleAuto1.started -= item.OnToggleAuto1;
+                @ToggleAuto1.performed -= item.OnToggleAuto1;
+                @ToggleAuto1.canceled -= item.OnToggleAuto1;
+                @ToggleAuto2.started -= item.OnToggleAuto2;
+                @ToggleAuto2.performed -= item.OnToggleAuto2;
+                @ToggleAuto2.canceled -= item.OnToggleAuto2;
+                @ToggleAuto3.started -= item.OnToggleAuto3;
+                @ToggleAuto3.performed -= item.OnToggleAuto3;
+                @ToggleAuto3.canceled -= item.OnToggleAuto3;
+                @ToggleAuto4.started -= item.OnToggleAuto4;
+                @ToggleAuto4.performed -= item.OnToggleAuto4;
+                @ToggleAuto4.canceled -= item.OnToggleAuto4;
+            }
+            m_Wrapper.m_CombatActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+
+    public CombatActions @Combat => new CombatActions(this);
+
+    public interface ICombatActions
+    {
+        void OnAttack1(InputAction.CallbackContext context);
+        void OnAttack2(InputAction.CallbackContext context);
+        void OnAttack3(InputAction.CallbackContext context);
+        void OnAttack4(InputAction.CallbackContext context);
+        void OnToggleAuto1(InputAction.CallbackContext context);
+        void OnToggleAuto2(InputAction.CallbackContext context);
+        void OnToggleAuto3(InputAction.CallbackContext context);
+        void OnToggleAuto4(InputAction.CallbackContext context);
     }
 }

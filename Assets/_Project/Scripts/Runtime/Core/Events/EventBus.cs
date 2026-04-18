@@ -1,6 +1,7 @@
 using System;
 using APEX.Combat;
 using APEX.Enemies;
+using APEX.Player;
 
 namespace APEX.Core.Events
 {
@@ -11,6 +12,8 @@ namespace APEX.Core.Events
     {
         public static event Action<IDamageable, Damage> OnDamaged;
         public static event Action<EnemyController, Damage> OnEnemyKilled;
+        public static event Action<PlayerController, Damage> OnPlayerDied;
+        public static event Action<IDamageable, Damage> OnPlayerHitEnemy;
 
         public static void RaiseDamaged(IDamageable target, Damage damage)
         {
@@ -20,6 +23,16 @@ namespace APEX.Core.Events
         public static void RaiseEnemyKilled(EnemyController enemy, Damage damage)
         {
             OnEnemyKilled?.Invoke(enemy, damage);
+        }
+
+        public static void RaisePlayerDied(PlayerController player, Damage damage)
+        {
+            OnPlayerDied?.Invoke(player, damage);
+        }
+
+        public static void RaisePlayerHitEnemy(IDamageable target, Damage damage)
+        {
+            OnPlayerHitEnemy?.Invoke(target, damage);
         }
     }
 }

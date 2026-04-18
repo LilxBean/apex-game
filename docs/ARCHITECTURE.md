@@ -41,8 +41,10 @@ Assets/
 │   │   │   ├── Core/          # Bootstrap, GameLoop, Services, EventBus
 │   │   │   │   ├── Events/    # EventBus (static C# events)
 │   │   │   │   └── Pooling/   # PrefabPool wrapper
-│   │   │   ├── Player/        # Organism, Movement, Stats
+│   │   │   ├── Player/        # PlayerController, PlayerCombat, PlayerStats
 │   │   │   ├── Combat/        # Attacks, Hit, Damage, Tags
+│   │   │   │   ├── Attacks/   # AttackDefinition, IAttackInstance, concrete attacks
+│   │   │   │   │   └── Passive/  # PassiveMeleeStream
 │   │   │   │   └── Tags/      # TagDefinition, TagSet
 │   │   │   ├── Enemies/       # AI, Archetypes, Spawner, Director
 │   │   │   │   ├── AI/        # EnemyAIBehaviour + concrete AIs
@@ -51,7 +53,7 @@ Assets/
 │   │   │   ├── Progression/   # XP, LevelUp, Passives, Hammers
 │   │   │   ├── Eras/          # (reserved for future era-specific code)
 │   │   │   ├── Den/           # Between-run UI and persistence
-│   │   │   ├── Testing/       # Temp stubs: TestPlayerStub, DebugDamageDealer, SandboxHUD
+│   │   │   ├── Testing/       # Debug helpers: DebugDamageDealer, SandboxHUD
 │   │   │   ├── UI/
 │   │   │   └── Utils/
 │   │   │   APEX.Runtime.asmdef

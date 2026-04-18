@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1b140576635f546b5f1bed27e7fa4a, type: 3}
+  m_Name: PlayerStats_Default
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Player.PlayerStats
+  maxHp: 60
+  moveSpeed: 6
+  passiveStreamEnabled: 1
+  passiveBiteRadius: 1.2
+  passiveBiteIntervalSeconds: 0.25
+  passiveBiteDamage: 3
+  passiveBiteTags:
+    _tags:
+    - {fileID: 11400000, guid: bd1eb9326896d7a4db46004baad4f011, type: 2}
+    - {fileID: 11400000, guid: c4a8a612673347041a6a5956d2ebc627, type: 2}
+  _damageMultipliers: []

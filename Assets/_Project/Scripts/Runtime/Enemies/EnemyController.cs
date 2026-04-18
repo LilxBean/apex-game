@@ -24,6 +24,7 @@ namespace APEX.Enemies
 
         private float _baseMoveSpeed;
         private float _moveSpeedModifier = 1f;
+        private float _knockbackLockout;
 
         // Per-instance AI state (shared SO can't hold this)
         [NonSerialized] public float AITimer;
@@ -60,6 +61,12 @@ namespace APEX.Enemies
 
         private void Update()
         {
+            if (_knockbackLockout > 0f)
+            {
+                _knockbackLockout -= Time.deltaTime;
+                return;
+            }
+
             if (_ai != null && _health.IsAlive)
             {
                 _ai.Tick(this, Time.deltaTime);
@@ -69,6 +76,16 @@ namespace APEX.Enemies
         public void Move(Vector2 direction, float speedScale = 1f)
         {
             _rb.linearVelocity = direction.normalized * (EffectiveMoveSpeed * speedScale);
+        }
+
+        /// <summary>
+        /// Apply an instantaneous velocity and suspend AI movement for a short lockout
+        /// so the push isn't overwritten next frame.
+        /// </summary>
+        public void ApplyKnockback(Vector2 impulse, float lockoutSeconds)
+        {
+            _rb.linearVelocity = impulse;
+            _knockbackLockout = Mathf.Max(_knockbackLockout, lockoutSeconds);
         }
 
         public void ApplySpeedModifier(float multiplier)
@@ -107,6 +124,7 @@ namespace APEX.Enemies
         {
             _rb.linearVelocity = Vector2.zero;
             _moveSpeedModifier = 1f;
+            _knockbackLockout = 0f;
             AITimer = 0f;
             _ai?.OnReset(this);
             _ai = null;

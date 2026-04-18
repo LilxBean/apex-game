@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcce0c8b78322c4fb8605f08f3086b0, type: 3}
+  m_Name: SO_Attack_Spit_Default
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Combat.Attacks.SpitAttack
+  id: attack.spit.default
+  displayName: Acid Spit
+  baseCooldownSeconds: 0.9
+  baseDamage: 8
+  tags:
+    _tags:
+    - {fileID: 11400000, guid: 3757f50c018515c4781486ed14801564, type: 2}
+    - {fileID: 11400000, guid: c5ae05ed9c04e794aa3a3c8fd5e50eb3, type: 2}
+  vfxPrefab: {fileID: 0}
+  autoFireByDefault: 1
+  projectilePrefab: {fileID: 4124964906129190234, guid: bc04090ba20abad4aae17da1793c17a5, type: 3}
+  spitProjectileSpeed: 12
+  spitProjectileLifetime: 2.5
+  spitAcquireRadius: 12
