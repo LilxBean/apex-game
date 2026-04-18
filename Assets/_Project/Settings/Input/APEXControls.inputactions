@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "DebugAttack",
+                    "type": "Button",
+                    "id": "aa11bb22-cc33-dd44-ee55-ff6677889900",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -125,6 +134,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ab12cd34-ef56-7890-abcd-ef1234abcdef",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

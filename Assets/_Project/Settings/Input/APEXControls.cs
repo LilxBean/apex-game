@@ -39,6 +39,15 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DebugAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa11bb22-cc33-dd44-ee55-ff6677889900"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -151,6 +160,17 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab12cd34-ef56-7890-abcd-ef1234abcdef"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -160,6 +180,7 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
+        m_Gameplay_DebugAttack = m_Gameplay.FindAction("DebugAttack", throwIfNotFound: true);
     }
 
     ~@APEXControls()
@@ -226,6 +247,7 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private readonly InputAction m_Gameplay_Move;
+    private readonly InputAction m_Gameplay_DebugAttack;
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
 
     public struct GameplayActions
@@ -235,6 +257,7 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
         public GameplayActions(@APEXControls wrapper) { m_Wrapper = wrapper; }
 
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
+        public InputAction @DebugAttack => m_Wrapper.m_Gameplay_DebugAttack;
 
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
 
@@ -252,6 +275,9 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @DebugAttack.started += instance.OnDebugAttack;
+            @DebugAttack.performed += instance.OnDebugAttack;
+            @DebugAttack.canceled += instance.OnDebugAttack;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -261,6 +287,9 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
+                @DebugAttack.started -= instance.OnDebugAttack;
+                @DebugAttack.performed -= instance.OnDebugAttack;
+                @DebugAttack.canceled -= instance.OnDebugAttack;
             }
         }
 
@@ -271,6 +300,9 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
                 @Move.started -= item.OnMove;
                 @Move.performed -= item.OnMove;
                 @Move.canceled -= item.OnMove;
+                @DebugAttack.started -= item.OnDebugAttack;
+                @DebugAttack.performed -= item.OnDebugAttack;
+                @DebugAttack.canceled -= item.OnDebugAttack;
             }
             m_Wrapper.m_GameplayActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
@@ -282,5 +314,6 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
     public interface IGameplayActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnDebugAttack(InputAction.CallbackContext context);
     }
 }

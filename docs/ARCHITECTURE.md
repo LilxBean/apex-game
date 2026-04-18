@@ -39,15 +39,24 @@ Assets/
 │   ├── Scripts/
 │   │   ├── Runtime/
 │   │   │   ├── Core/          # Bootstrap, GameLoop, Services, EventBus
+│   │   │   │   ├── Events/    # EventBus (static C# events)
+│   │   │   │   └── Pooling/   # PrefabPool wrapper
 │   │   │   ├── Player/        # Organism, Movement, Stats
 │   │   │   ├── Combat/        # Attacks, Hit, Damage, Tags
+│   │   │   │   └── Tags/      # TagDefinition, TagSet
 │   │   │   ├── Enemies/       # AI, Archetypes, Spawner, Director
+│   │   │   │   ├── AI/        # EnemyAIBehaviour + concrete AIs
+│   │   │   │   ├── Data/      # EnemyDefinition, EraDefinition, SpawnEntry
+│   │   │   │   └── Spawning/  # EnemySpawner, EraDirector
 │   │   │   ├── Progression/   # XP, LevelUp, Passives, Hammers
-│   │   │   ├── Eras/          # Era data, EraDirector
+│   │   │   ├── Eras/          # (reserved for future era-specific code)
 │   │   │   ├── Den/           # Between-run UI and persistence
+│   │   │   ├── Testing/       # Temp stubs: TestPlayerStub, DebugDamageDealer, SandboxHUD
 │   │   │   ├── UI/
 │   │   │   └── Utils/
+│   │   │   APEX.Runtime.asmdef
 │   │   ├── Editor/            # Custom inspectors, tooling
+│   │   │   APEX.Editor.asmdef
 │   │   └── Tests/
 │   │       ├── EditMode/
 │   │       └── PlayMode/
