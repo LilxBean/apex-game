@@ -50,6 +50,8 @@ namespace APEX.Player
 
             if (_stats != null)
             {
+                // Clone so runtime passive mutations never persist back to the asset in the editor.
+                _stats = Instantiate(_stats);
                 _health.Initialize(_stats.maxHp, default, default);
             }
         }

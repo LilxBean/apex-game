@@ -12,6 +12,9 @@ namespace APEX.Combat.Attacks
         protected readonly AttackDefinition Def;
         protected float CooldownRemaining;
 
+        public readonly AttackMutations Mutations = new();
+        public readonly System.Collections.Generic.HashSet<string> AppliedHammerIds = new();
+
         protected AttackInstanceBase(AttackDefinition def, PlayerCombat combat)
         {
             Def = def;
@@ -19,10 +22,12 @@ namespace APEX.Combat.Attacks
             AutoFire = def.autoFireByDefault;
         }
 
-        public TagSet Tags => Def.tags;
+        public TagSet Tags => Mutations.BuildTags(Def.tags);
         public AttackDefinition Definition => Def;
         public float Cooldown => CooldownRemaining;
         public bool AutoFire { get; set; }
+
+        protected float EffectiveDamage => Def.baseDamage * Mutations.DamageMultiplier;
 
         public virtual void Tick(float dt)
         {
@@ -40,7 +45,7 @@ namespace APEX.Combat.Attacks
         public void Fire(bool manual = false)
         {
             if (CooldownRemaining > 0f) return;
-            CooldownRemaining = Def.baseCooldownSeconds;
+            CooldownRemaining = Def.baseCooldownSeconds * Mutations.CooldownMultiplier;
             DoFire(manual);
         }
 

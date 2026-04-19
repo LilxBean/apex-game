@@ -45,6 +45,19 @@ namespace APEX.Player
             return result;
         }
 
+        /// <summary>
+        /// Adds a multiplier that applies whenever an attack carries any of the passive's tags.
+        /// Runtime-only — callers should ensure they're mutating a runtime clone, not the asset.
+        /// </summary>
+        public void AddDamageMultiplier(TagSet filterTags, float multiplier)
+        {
+            foreach (var tag in filterTags.Tags)
+            {
+                if (tag == null) continue;
+                _damageMultipliers.Add(new TagMultiplier { tag = tag, multiplier = multiplier });
+            }
+        }
+
         [Serializable]
         public struct TagMultiplier
         {

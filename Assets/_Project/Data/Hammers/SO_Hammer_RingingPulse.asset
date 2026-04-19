@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed99ec58dbbcbd4ab131de1e256f986, type: 3}
+  m_Name: SO_Hammer_RingingPulse
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Progression.HammerDefinition
+  id: hammer.ringing_pulse
+  displayName: Ringing Pulse
+  description: Pulse fires a second smaller ring 0.25s later.
+  rarity: 0
+  targetAttack: {fileID: 11400000, guid: 74cf0069043ec7045a8c305de5762933, type: 2}
+  tagsAdded:
+    _tags:
+    - {fileID: 11400000, guid: d02162255133d0b489ca8f71fe2c6096, type: 2}
+  kind: 2

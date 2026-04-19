@@ -28,8 +28,10 @@ namespace APEX.Combat.Attacks
             {
                 field = go.AddComponent<CorrosiveField>();
             }
-            field.Init(_def.fieldRadius, _def.fieldDurationSeconds, _def.fieldTickIntervalSeconds,
-                Def.baseDamage, Def.tags, Combat, this);
+            float radius = _def.fieldRadius * Mutations.RadiusMultiplier;
+            float duration = _def.fieldDurationSeconds * Mutations.DurationMultiplier;
+            field.Init(radius, duration, _def.fieldTickIntervalSeconds,
+                EffectiveDamage, Tags, Combat, this);
         }
     }
 }

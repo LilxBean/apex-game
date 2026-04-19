@@ -24,4 +24,6 @@ MonoBehaviour:
   weaknesses:
     _tags: []
   aiBehaviour: {fileID: 11400000, guid: f33cb2aa402f6904cb8a8704bf45edd6, type: 2}
+  xpDrop: 1
+  orbCount: 1
   debugColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

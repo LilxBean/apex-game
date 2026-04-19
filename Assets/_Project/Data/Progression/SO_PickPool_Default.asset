@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9824689d4c70134c85cc796e5a9980c, type: 3}
+  m_Name: SO_PickPool_Default
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Progression.PickPool
+  passives:
+  - {fileID: 11400000, guid: f3325fe18d5512943b464b0ba1c3922a, type: 2}
+  - {fileID: 11400000, guid: 1c621db3ce1a6364f9149a1568b94813, type: 2}
+  - {fileID: 11400000, guid: 47b943b39e3fce2488fd8af9250783b5, type: 2}
+  - {fileID: 11400000, guid: 24551f3bf3bd2ba46be9566409d99780, type: 2}
+  - {fileID: 11400000, guid: c54cbf1fa2a3dde4da7b0a680da448dc, type: 2}
+  - {fileID: 11400000, guid: 63d060aedce9348428b9be8ee71ce805, type: 2}
+  - {fileID: 11400000, guid: a1979da3bd399304daba1711e87bb27c, type: 2}
+  - {fileID: 11400000, guid: 1d6403af6140b5a4ea6e08ebb8496ae6, type: 2}
+  - {fileID: 11400000, guid: e6f3ca1fcdc22c341ba724b92468159a, type: 2}
+  - {fileID: 11400000, guid: 48e32336416225e4eb03b5fab07fa133, type: 2}
+  - {fileID: 11400000, guid: f20beb83f40da3344ad0bfe8e18ccc20, type: 2}
+  - {fileID: 11400000, guid: 08d5d648c5ddd9440aaea411dde2a4ff, type: 2}
+  hammers:
+  - {fileID: 11400000, guid: ded46731e6bfadd44bc5f1f3d03a9964, type: 2}
+  - {fileID: 11400000, guid: d2864ae9e60b52d45a9ad03ff6664bf8, type: 2}
+  - {fileID: 11400000, guid: 126191bfb0eb79e418e32febb503f9b0, type: 2}
+  - {fileID: 11400000, guid: 26e9c30cf1a84d94a954fc3900d805df, type: 2}
+  - {fileID: 11400000, guid: a87354f353c4e044b9bd25f6884d20d6, type: 2}
+  - {fileID: 11400000, guid: fed927491feaa3448b8240d0350fb065, type: 2}
+  - {fileID: 11400000, guid: 9999f32a46eea984cb910b0d263b5f2e, type: 2}
+  - {fileID: 11400000, guid: 224b3a70ec0f5554f8c6736e9a66145f, type: 2}

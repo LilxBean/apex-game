@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4e3e7aa38e4c774096a443ccbeb3664, type: 3}
+  m_Name: SO_PickTable_Default
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Progression.PickTable
+  _bands:
+  - name: Early
+    minLevel: 1
+    commonPct: 0.7
+    rarePct: 0.25
+    epicPct: 0.05
+    hammerPct: 0.25
+  - name: Mid
+    minLevel: 9
+    commonPct: 0.45
+    rarePct: 0.4
+    epicPct: 0.15
+    hammerPct: 0.35
+  - name: Late
+    minLevel: 18
+    commonPct: 0.2
+    rarePct: 0.5
+    epicPct: 0.3
+    hammerPct: 0.4

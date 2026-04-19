@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1249f5c6a3bb24d9b7e9acb6c75f40, type: 3}
+  m_Name: SO_Passive_ApexHunger
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Progression.PassiveDefinition
+  id: passive.apex_hunger
+  displayName: Apex Hunger
+  description: +20% XP gained.
+  rarity: 2
+  tags:
+    _tags:
+    - {fileID: 11400000, guid: bec2bf113d20341448d8e33d2c995c23, type: 2}
+    - {fileID: 11400000, guid: 2eede3bc2739ea14a95b333ff7138a8f, type: 2}
+  kind: 8
+  maxStacks: 1

@@ -71,7 +71,7 @@ namespace APEX.Combat.Attacks
                     if (hp == null || !hp.IsAlive) continue;
 
                     alreadyHit.Add(enemy);
-                    Combat.DealDamage(hp, Def.baseDamage, Def.tags, this);
+                    Combat.DealDamage(hp, EffectiveDamage, Tags, this);
                 }
 
                 elapsed += Time.deltaTime;

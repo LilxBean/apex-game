@@ -40,6 +40,12 @@ namespace APEX.Combat
             _currentHp = _maxHp;
         }
 
+        public void Heal(float amount)
+        {
+            if (amount <= 0f || !IsAlive) return;
+            _currentHp = Mathf.Min(_maxHp, _currentHp + amount);
+        }
+
         public void TakeDamage(in Damage damage)
         {
             if (!IsAlive) return;

@@ -30,6 +30,10 @@ namespace APEX.Enemies.Data
         [Header("AI")]
         public EnemyAIBehaviour aiBehaviour;
 
+        [Header("Drops")]
+        public int xpDrop = 1;
+        public int orbCount = 1;
+
         [Header("Debug")]
         public Color debugColor = Color.red;
     }

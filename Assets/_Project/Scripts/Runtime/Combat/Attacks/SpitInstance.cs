@@ -34,7 +34,7 @@ namespace APEX.Combat.Attacks
                 proj = go.AddComponent<SporeProjectile>();
             }
             proj.Init(dir, _def.spitProjectileSpeed, _def.spitProjectileLifetime,
-                Def.baseDamage, Def.tags, Combat);
+                EffectiveDamage, Tags, Combat);
         }
 
         private Vector2 ResolveAim(Vector2 origin, bool manual)

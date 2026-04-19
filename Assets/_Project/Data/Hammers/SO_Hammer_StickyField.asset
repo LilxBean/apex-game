@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed99ec58dbbcbd4ab131de1e256f986, type: 3}
+  m_Name: SO_Hammer_StickyField
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Progression.HammerDefinition
+  id: hammer.sticky_field
+  displayName: Sticky Field
+  description: Corrosive Field slows enemies inside by 30%.
+  rarity: 0
+  targetAttack: {fileID: 11400000, guid: e3faf38bf79178d4496a80dd0eb1fd42, type: 2}
+  tagsAdded:
+    _tags:
+    - {fileID: 11400000, guid: c61c43bde3b3d6a43893077a205bd3cd, type: 2}
+  kind: 3

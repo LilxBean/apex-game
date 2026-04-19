@@ -292,6 +292,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &426687984 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5092181595824804713, guid: 7aecdada9014afb4a906ba782e9089dc, type: 3}
+  m_PrefabInstance: {fileID: 643359970}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c45d63d1d8971c34db96e716fb162fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Player.PlayerController
 --- !u!1 &612285759
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,6 +693,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009405216}
   m_CullTransparentMesh: 1
+--- !u!1 &1321656344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1321656346}
+  - component: {fileID: 1321656345}
+  m_Layer: 0
+  m_Name: RunBootstrap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1321656345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321656344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8aed88f1dd6e244a3bc42ae1c19151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Progression.RunBootstrap
+  _player: {fileID: 426687984}
+  _xpCurve: {fileID: 11400000, guid: a55183c9667b2cf498b23d0492eec9c8, type: 2}
+  _pickTable: {fileID: 11400000, guid: 66a4074c91970f049b9fc2c6966735eb, type: 2}
+  _pickPool: {fileID: 11400000, guid: d0a3313429ea50240b700e87ca7709a5, type: 2}
+  _xpOrbPrefab: {fileID: 2322976992500262666, guid: 7863fa6918fd1fe41849f6a5781c53f4, type: 3}
+  _runLengthSeconds: 900
+--- !u!4 &1321656346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321656344}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.95575, y: 2.76554, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1587527222
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,3 +799,4 @@ SceneRoots:
   - {fileID: 612285763}
   - {fileID: 617271427}
   - {fileID: 643359970}
+  - {fileID: 1321656346}

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3666748700651255861}
   - component: {fileID: 1512313366403394600}
   - component: {fileID: 2634555572655109665}
+  - component: {fileID: 444790557364520757}
   m_Layer: 0
   m_Name: P_Enemy_Default
   m_TagString: Untagged
@@ -187,3 +188,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c0af786018309c49bd6c3cad61f87f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: APEX.Runtime::APEX.Enemies.EnemyController
+--- !u!114 &444790557364520757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502826602850496382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 909596041f042304aaf2c23cbb8b9e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: APEX.Runtime::APEX.Progression.EnemyDrop

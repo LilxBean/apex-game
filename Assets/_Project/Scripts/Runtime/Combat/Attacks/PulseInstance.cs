@@ -19,6 +19,8 @@ namespace APEX.Combat.Attacks
         {
             Vector2 origin = Combat.Controller.Position;
 
+            float radius = _def.pulseRadius * Mutations.RadiusMultiplier;
+
             if (Def.vfxPrefab != null)
             {
                 var vfx = Combat.Pool.Get(Def.vfxPrefab);
@@ -27,20 +29,20 @@ namespace APEX.Combat.Attacks
                 {
                     visual = vfx.AddComponent<PulseVisual>();
                 }
-                visual.Play(_def.pulseRadius, _def.visualDurationSeconds, Combat.Pool);
+                visual.Play(radius, _def.visualDurationSeconds, Combat.Pool);
             }
 
-            Combat.RunCoroutine(ResolveAfterWindup(origin));
+            Combat.RunCoroutine(ResolveAfterWindup(origin, radius));
         }
 
-        private IEnumerator ResolveAfterWindup(Vector2 origin)
+        private IEnumerator ResolveAfterWindup(Vector2 origin, float radius)
         {
             if (_def.windupSeconds > 0f)
             {
                 yield return new WaitForSeconds(_def.windupSeconds);
             }
 
-            int count = Physics2D.OverlapCircleNonAlloc(origin, _def.pulseRadius, _overlapBuffer);
+            int count = Physics2D.OverlapCircleNonAlloc(origin, radius, _overlapBuffer);
             for (int i = 0; i < count; i++)
             {
                 var col = _overlapBuffer[i];
@@ -53,7 +55,7 @@ namespace APEX.Combat.Attacks
                 if (away.sqrMagnitude < 0.0001f) away = Vector2.right;
                 away.Normalize();
 
-                Combat.DealDamage(hp, Def.baseDamage, Def.tags, this);
+                Combat.DealDamage(hp, EffectiveDamage, Tags, this);
                 enemy.ApplyKnockback(away * _def.knockbackImpulse, 0.15f);
             }
         }

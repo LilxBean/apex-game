@@ -15,6 +15,11 @@ namespace APEX.Core.Events
         public static event Action<PlayerController, Damage> OnPlayerDied;
         public static event Action<IDamageable, Damage> OnPlayerHitEnemy;
 
+        // Progression: amount gained, xp into current level, xp required for current level, fraction 0..1.
+        public static event Action<int, int, int, float> OnXPGained;
+        public static event Action<int> OnLevelUp;
+        public static event Action OnRunEnded;
+
         public static void RaiseDamaged(IDamageable target, Damage damage)
         {
             OnDamaged?.Invoke(target, damage);
@@ -33,6 +38,21 @@ namespace APEX.Core.Events
         public static void RaisePlayerHitEnemy(IDamageable target, Damage damage)
         {
             OnPlayerHitEnemy?.Invoke(target, damage);
+        }
+
+        public static void RaiseXPGained(int amount, int intoLevel, int requiredForLevel, float fraction)
+        {
+            OnXPGained?.Invoke(amount, intoLevel, requiredForLevel, fraction);
+        }
+
+        public static void RaiseLevelUp(int newLevel)
+        {
+            OnLevelUp?.Invoke(newLevel);
+        }
+
+        public static void RaiseRunEnded()
+        {
+            OnRunEnded?.Invoke();
         }
     }
 }
