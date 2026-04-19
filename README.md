@@ -4,7 +4,7 @@ A Vampire Survivors–like where you play as a consuming organism rising through
 
 ## Status
 
-Pre-production. Design and scaffolding stage.
+Developing Alpha. Core systems and UX
 
 ## Stack
 
