@@ -10,6 +10,33 @@ namespace APEX.UI
     /// </summary>
     internal static class UIFactory
     {
+        private static Sprite _whiteSprite;
+
+        /// <summary>
+        /// Returns a runtime-built 4x4 white sprite suitable as a Source Image for
+        /// UGUI Image components. Required by Image.Type.Filled — an Image without a
+        /// sprite renders as a solid rectangle that ignores fillAmount.
+        /// </summary>
+        public static Sprite GetWhiteSprite()
+        {
+            if (_whiteSprite != null) return _whiteSprite;
+
+            var tex = new Texture2D(4, 4, TextureFormat.RGBA32, false)
+            {
+                name = "UIFactory_WhiteRuntime",
+                filterMode = FilterMode.Bilinear,
+                wrapMode = TextureWrapMode.Clamp
+            };
+            var pixels = new Color32[16];
+            for (int i = 0; i < pixels.Length; i++) pixels[i] = new Color32(255, 255, 255, 255);
+            tex.SetPixels32(pixels);
+            tex.Apply(false, true);
+
+            _whiteSprite = Sprite.Create(tex, new Rect(0, 0, 4, 4), new Vector2(0.5f, 0.5f), 100f, 0, SpriteMeshType.FullRect);
+            _whiteSprite.name = "UIFactory_WhiteRuntime";
+            return _whiteSprite;
+        }
+
         public static GameObject CreateOverlayCanvas(Transform parent, string name, int sortingOrder)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Canvas),

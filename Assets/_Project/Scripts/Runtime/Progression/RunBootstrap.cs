@@ -1,5 +1,8 @@
+using APEX.CameraRig;
+using APEX.Enemies.Spawning;
 using APEX.Player;
 using APEX.UI;
+using APEX.World;
 using UnityEngine;
 
 namespace APEX.Progression
@@ -25,6 +28,10 @@ namespace APEX.Progression
         [Header("Run Tuning")]
         [SerializeField] private float _runLengthSeconds = 15f * 60f;
 
+        [Header("World")]
+        [SerializeField] private Vector2 _arenaSize = new(60f, 40f);
+        [SerializeField] private float _cameraSmoothTime = 0.18f;
+
         private void Awake()
         {
             if (_player == null)
@@ -39,6 +46,37 @@ namespace APEX.Progression
             }
 
             var playerGo = _player.gameObject;
+
+            // Arena bounds + background first so camera can clamp to them.
+            var arenaGo = new GameObject("ArenaBounds");
+            arenaGo.transform.SetParent(transform);
+            var arena = arenaGo.AddComponent<ArenaBounds>();
+            arena.Build(Vector2.zero, _arenaSize);
+
+            var bgGo = new GameObject("Background", typeof(SpriteRenderer));
+            bgGo.transform.SetParent(transform);
+            var bg = bgGo.AddComponent<BackgroundTiler>();
+            bg.Build(arena.WorldRect);
+
+            // Camera follow on Camera.main.
+            var mainCam = Camera.main;
+            if (mainCam != null)
+            {
+                var follow = mainCam.GetComponent<CameraFollow2D>();
+                if (follow == null) follow = mainCam.gameObject.AddComponent<CameraFollow2D>();
+                follow.Configure(_player.transform, _player.Rigidbody, _cameraSmoothTime);
+                follow.SetClamp(arena.WorldRect);
+                follow.ConfigureShakeTarget(_player.Health);
+                follow.SnapToTarget();
+            }
+            else
+            {
+                Debug.LogWarning("[RunBootstrap] No Camera.main found; skipping follow camera.");
+            }
+
+            // Clamp enemy spawns to the arena.
+            var enemySpawner = FindFirstObjectByType<EnemySpawner>();
+            if (enemySpawner != null) enemySpawner.SetArenaBounds(arena.WorldRect);
 
             var xp = playerGo.GetComponent<PlayerXP>();
             if (xp == null) xp = playerGo.AddComponent<PlayerXP>();
@@ -66,7 +104,7 @@ namespace APEX.Progression
             var hudGo = new GameObject("ProgressionHUD");
             hudGo.transform.SetParent(transform);
             var hud = hudGo.AddComponent<ProgressionHUD>();
-            hud.Bind(xp, runManager);
+            hud.Bind(xp, runManager, _player.Health);
 
             // Level-up screen.
             var levelUpGo = new GameObject("LevelUpScreen");

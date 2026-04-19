@@ -301,10 +301,15 @@ namespace APEX.Editor
         {
             string path = "Assets/_Project/Data/Player/PlayerStats_Default.asset";
             var existing = AssetDatabase.LoadAssetAtPath<PlayerStats>(path);
-            if (existing != null) return existing;
+            if (existing != null)
+            {
+                existing.maxHp = 180f;
+                EditorUtility.SetDirty(existing);
+                return existing;
+            }
 
             var stats = ScriptableObject.CreateInstance<PlayerStats>();
-            stats.maxHp = 60f;
+            stats.maxHp = 180f;
             stats.moveSpeed = 6f;
             stats.passiveStreamEnabled = true;
             stats.passiveBiteRadius = 1.2f;

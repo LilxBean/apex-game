@@ -11,10 +11,14 @@ namespace APEX.Enemies.Spawning
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private float _spawnRadius = 15f;
+        [SerializeField] private float _arenaMargin = 1.5f;
+        [SerializeField] private float _minDistanceFromPlayer = 6f;
 
         private EraDefinition _currentEra;
         private IPlayerTarget _playerTarget;
         private PrefabPool _pool;
+        private Rect _arenaRect;
+        private bool _hasArenaRect;
 
         public void Initialize(IPlayerTarget playerTarget)
         {
@@ -25,6 +29,12 @@ namespace APEX.Enemies.Spawning
         public void SetEra(EraDefinition era)
         {
             _currentEra = era;
+        }
+
+        public void SetArenaBounds(Rect arenaRect)
+        {
+            _arenaRect = arenaRect;
+            _hasArenaRect = true;
         }
 
         public void SpawnEnemy()
@@ -72,8 +82,27 @@ namespace APEX.Enemies.Spawning
         private Vector2 GetSpawnPosition()
         {
             Vector2 center = _playerTarget?.Position ?? Vector2.zero;
-            float angle = Random.Range(0f, Mathf.PI * 2f);
-            return center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * _spawnRadius;
+
+            for (int attempt = 0; attempt < 4; attempt++)
+            {
+                float angle = Random.Range(0f, Mathf.PI * 2f);
+                Vector2 candidate = center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * _spawnRadius;
+
+                if (_hasArenaRect)
+                {
+                    candidate.x = Mathf.Clamp(candidate.x, _arenaRect.xMin + _arenaMargin, _arenaRect.xMax - _arenaMargin);
+                    candidate.y = Mathf.Clamp(candidate.y, _arenaRect.yMin + _arenaMargin, _arenaRect.yMax - _arenaMargin);
+                }
+
+                if ((candidate - center).sqrMagnitude >= _minDistanceFromPlayer * _minDistanceFromPlayer)
+                {
+                    return candidate;
+                }
+            }
+
+            // Fall back to an unclamped ring-sample so we never deadlock spawning.
+            float fallbackAngle = Random.Range(0f, Mathf.PI * 2f);
+            return center + new Vector2(Mathf.Cos(fallbackAngle), Mathf.Sin(fallbackAngle)) * _spawnRadius;
         }
 
         private void OnEnemyReturnToPool(EnemyController controller)

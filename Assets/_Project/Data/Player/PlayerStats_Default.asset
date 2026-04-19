@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1b140576635f546b5f1bed27e7fa4a, type: 3}
   m_Name: PlayerStats_Default
   m_EditorClassIdentifier: APEX.Runtime::APEX.Player.PlayerStats
-  maxHp: 60
+  maxHp: 180
   moveSpeed: 6
   passiveStreamEnabled: 1
   passiveBiteRadius: 1.2
