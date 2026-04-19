@@ -180,7 +180,7 @@ namespace APEX.UI
                 dr.anchorMin = new Vector2(0.08f, 0.12f);
                 dr.anchorMax = new Vector2(0.92f, 0.60f);
                 dr.offsetMin = Vector2.zero; dr.offsetMax = Vector2.zero;
-                c.DescText.enableWordWrapping = true;
+                c.DescText.textWrappingMode = TextWrappingModes.Normal;
 
                 return c;
             }
