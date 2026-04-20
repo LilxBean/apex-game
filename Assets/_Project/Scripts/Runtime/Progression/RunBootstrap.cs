@@ -1,5 +1,6 @@
 using APEX.CameraRig;
 using APEX.Enemies.Spawning;
+using APEX.Meta;
 using APEX.Player;
 using APEX.UI;
 using APEX.World;
@@ -37,6 +38,16 @@ namespace APEX.Progression
         // has completed — otherwise _player.Health can observe null and the HUD binds to null.
         private void Start()
         {
+            var request = SceneLoader.ConsumePendingRequest();
+            if (request == null)
+            {
+                Debug.LogWarning("[APEX] Run scene started without RunRequest, using defaults.");
+            }
+            else if (request.Mode != Mode.Main)
+            {
+                Debug.LogWarning($"[APEX] Mode {request.Mode} not implemented this session, falling back to Main.");
+            }
+
             if (_player == null)
             {
                 _player = FindFirstObjectByType<PlayerController>();
@@ -61,8 +72,10 @@ namespace APEX.Progression
             var bg = bgGo.AddComponent<BackgroundTiler>();
             bg.Build(arena.WorldRect);
 
-            // Camera follow on Camera.main.
-            var mainCam = Camera.main;
+            // Camera follow on the Run scene's camera. We must not use Camera.main directly —
+            // during the additive transition MainMenu may still be loaded and its tagged
+            // MainCamera would be returned, then destroyed on unload, leaving no follow.
+            var mainCam = FindCameraInOwnScene();
             if (mainCam != null)
             {
                 var follow = mainCam.GetComponent<CameraFollow2D>();
@@ -74,7 +87,7 @@ namespace APEX.Progression
             }
             else
             {
-                Debug.LogWarning("[RunBootstrap] No Camera.main found; skipping follow camera.");
+                Debug.LogWarning("[RunBootstrap] No Camera found in Run scene; skipping follow camera.");
             }
 
             // Clamp enemy spawns to the arena.
@@ -130,6 +143,22 @@ namespace APEX.Progression
             var dmgGo = new GameObject("FloatingDamageNumbers");
             dmgGo.transform.SetParent(transform);
             dmgGo.AddComponent<FloatingDamageNumbers>();
+        }
+
+        private Camera FindCameraInOwnScene()
+        {
+            var ownScene = gameObject.scene;
+            var all = FindObjectsByType<Camera>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            Camera fallback = null;
+            foreach (var cam in all)
+            {
+                if (cam.gameObject.scene == ownScene)
+                {
+                    if (cam.CompareTag("MainCamera")) return cam;
+                    fallback ??= cam;
+                }
+            }
+            return fallback;
         }
 
         // Helper: set a private serialized field by reflection (safe at runtime; Bind methods

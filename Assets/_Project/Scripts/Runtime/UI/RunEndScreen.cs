@@ -1,15 +1,17 @@
+using APEX.Core;
 using APEX.Core.Events;
+using APEX.Meta;
 using APEX.Progression;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace APEX.UI
 {
     /// <summary>
-    /// Canvas overlay shown on OnRunEnded. Displays time/kills/level and a Restart button
-    /// that reloads the current scene.
+    /// Canvas overlay shown on OnRunEnded. Renders the RunStats payload and exposes
+    /// Restart (re-runs the same RunRequest via SceneLoader) and Main Menu (returns to
+    /// MainMenu.unity) buttons.
     /// </summary>
     public class RunEndScreen : MonoBehaviour
     {
@@ -22,22 +24,23 @@ namespace APEX.UI
 
         private void Awake() { BuildUI(); Hide(); }
 
-        private void OnEnable() { EventBus.OnRunEnded += Show; }
-        private void OnDisable() { EventBus.OnRunEnded -= Show; }
+        private void OnEnable() { EventBus.OnRunEnded += OnRunEnded; }
+        private void OnDisable() { EventBus.OnRunEnded -= OnRunEnded; }
 
         private void Hide() { if (_root != null) _root.SetActive(false); }
 
-        private void Show()
+        private void OnRunEnded(RunStats stats, EndReason reason)
         {
-            if (_runManager != null && _summary != null)
+            if (_summary != null)
             {
-                float t = _runManager.RunTime;
+                float t = stats.RunDurationSeconds;
                 int mm = Mathf.FloorToInt(t / 60f);
                 int ss = Mathf.FloorToInt(t % 60f);
+                int kills = _runManager != null ? _runManager.Kills : 0;
                 _summary.text =
                     $"Time Survived: {mm:00}:{ss:00}\n" +
-                    $"Kills: {_runManager.Kills}\n" +
-                    $"Level Reached: {_runManager.LevelReached}";
+                    $"Kills: {kills}\n" +
+                    $"Level Reached: {stats.LevelReached}";
             }
             _root.SetActive(true);
         }
@@ -45,7 +48,13 @@ namespace APEX.UI
         private void OnRestartClicked()
         {
             Time.timeScale = 1f;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneLoader.Run(SceneLoader.RestartRun());
+        }
+
+        private void OnMainMenuClicked()
+        {
+            Time.timeScale = 1f;
+            SceneLoader.Run(SceneLoader.ReturnToMainMenu());
         }
 
         private void BuildUI()
@@ -65,14 +74,23 @@ namespace APEX.UI
             sr.anchorMax = new Vector2(1f, 0.68f);
             sr.offsetMin = Vector2.zero; sr.offsetMax = Vector2.zero;
 
-            var btn = UIFactory.CreateButton(dim.transform, "Restart");
-            var br = (RectTransform)btn.transform;
-            br.anchorMin = new Vector2(0.5f, 0.18f);
-            br.anchorMax = new Vector2(0.5f, 0.18f);
-            br.pivot = new Vector2(0.5f, 0.5f);
-            br.sizeDelta = new Vector2(320f, 72f);
-            br.anchoredPosition = Vector2.zero;
-            btn.onClick.AddListener(OnRestartClicked);
+            var restart = UIFactory.CreateButton(dim.transform, "Restart");
+            var rr = (RectTransform)restart.transform;
+            rr.anchorMin = new Vector2(0.5f, 0.18f);
+            rr.anchorMax = new Vector2(0.5f, 0.18f);
+            rr.pivot = new Vector2(0.5f, 0.5f);
+            rr.sizeDelta = new Vector2(320f, 72f);
+            rr.anchoredPosition = new Vector2(-180f, 0f);
+            restart.onClick.AddListener(OnRestartClicked);
+
+            var menu = UIFactory.CreateButton(dim.transform, "Main Menu");
+            var mr = (RectTransform)menu.transform;
+            mr.anchorMin = new Vector2(0.5f, 0.18f);
+            mr.anchorMax = new Vector2(0.5f, 0.18f);
+            mr.pivot = new Vector2(0.5f, 0.5f);
+            mr.sizeDelta = new Vector2(320f, 72f);
+            mr.anchoredPosition = new Vector2(180f, 0f);
+            menu.onClick.AddListener(OnMainMenuClicked);
         }
     }
 }

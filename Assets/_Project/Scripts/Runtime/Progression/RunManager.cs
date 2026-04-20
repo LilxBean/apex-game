@@ -1,4 +1,5 @@
 using APEX.Combat;
+using APEX.Core;
 using APEX.Core.Events;
 using APEX.Enemies;
 using APEX.Player;
@@ -45,19 +46,26 @@ namespace APEX.Progression
         {
             if (_ended) return;
             _runTime += Time.deltaTime;
-            if (_runTime >= _runLengthSeconds) EndRun();
+            // TODO session 3: timer expiry should emit EndReason.Victory once win detection exists.
+            if (_runTime >= _runLengthSeconds) EndRun(EndReason.Defeat);
         }
 
         private void OnEnemyKilled(EnemyController _, Damage __) => _kills++;
 
-        private void OnPlayerDied(PlayerController _, Damage __) => EndRun();
+        private void OnPlayerDied(PlayerController _, Damage __) => EndRun(EndReason.Defeat);
 
-        private void EndRun()
+        private void EndRun(EndReason reason)
         {
             if (_ended) return;
             _ended = true;
             Time.timeScale = 0f;
-            EventBus.RaiseRunEnded();
+
+            var stats = new RunStats
+            {
+                RunDurationSeconds = _runTime,
+                LevelReached = _playerXP != null ? _playerXP.Level : 1
+            };
+            EventBus.RaiseRunEnded(stats, reason);
         }
     }
 }
