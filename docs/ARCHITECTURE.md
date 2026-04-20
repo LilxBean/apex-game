@@ -8,7 +8,7 @@ Unity creates and owns `Assets/`, `Packages/`, `ProjectSettings/` on first open.
 
 ```
 Assets/
-├── _Project/                  # everything we author
+├── _Project/                    # everything we author
 │   ├── Art/
 │   │   ├── Sprites/
 │   │   ├── Shaders/
@@ -17,90 +17,98 @@ Assets/
 │   ├── Audio/
 │   │   ├── Music/
 │   │   └── SFX/
-│   ├── Data/                  # all ScriptableObject assets
-│   │   ├── Attacks/
-│   │   ├── Enemies/
-│   │   ├── Passives/
-│   │   ├── Hammers/
+│   ├── Data/                    # all ScriptableObject assets
+│   │   ├── Attacks/             # 4 AttackDefinition defaults
+│   │   ├── Enemies/             # EnemyDefinition + AI behaviour SOs
 │   │   ├── Eras/
-│   │   └── Tags/
+│   │   ├── Hammers/             # 8 seeded attack mutators
+│   │   ├── Passives/            # 12 seeded passives
+│   │   ├── Player/              # PlayerStats defaults
+│   │   ├── Progression/         # XPCurve, PickTable, PickPool
+│   │   └── Tags/                # ~32 tag SOs
 │   ├── Prefabs/
 │   │   ├── Player/
 │   │   ├── Enemies/
 │   │   ├── Projectiles/
+│   │   ├── Progression/         # P_XPOrb
 │   │   ├── VFX/
 │   │   └── UI/
 │   ├── Scenes/
 │   │   ├── Runtime/
-│   │   │   ├── Bootstrap.unity
-│   │   │   ├── Den.unity
-│   │   │   └── Run.unity
+│   │   │   └── Sandbox.unity    # current playable scene
+│   │   │   # Planned: MainMenu.unity, Run.unity (see docs/ROADMAP.md §1)
 │   │   └── Test/
 │   ├── Scripts/
 │   │   ├── Runtime/
-│   │   │   ├── Core/          # Bootstrap, GameLoop, Services, EventBus
-│   │   │   │   ├── Events/    # EventBus (static C# events)
-│   │   │   │   └── Pooling/   # PrefabPool wrapper
-│   │   │   ├── Player/        # PlayerController, PlayerCombat, PlayerStats
-│   │   │   ├── Combat/        # Attacks, Hit, Damage, Tags
-│   │   │   │   ├── Attacks/   # AttackDefinition, IAttackInstance, concrete attacks
-│   │   │   │   │   └── Passive/  # PassiveMeleeStream
-│   │   │   │   └── Tags/      # TagDefinition, TagSet
-│   │   │   ├── Enemies/       # AI, Archetypes, Spawner, Director
-│   │   │   │   ├── AI/        # EnemyAIBehaviour + concrete AIs
-│   │   │   │   ├── Data/      # EnemyDefinition, EraDefinition, SpawnEntry
-│   │   │   │   └── Spawning/  # EnemySpawner, EraDirector
-│   │   │   ├── Progression/   # XP, LevelUp, Passives, Hammers
-│   │   │   ├── Eras/          # (reserved for future era-specific code)
-│   │   │   ├── Den/           # Between-run UI and persistence
-│   │   │   ├── Testing/       # Debug helpers: DebugDamageDealer, SandboxHUD
-│   │   │   ├── UI/
-│   │   │   └── Utils/
-│   │   │   APEX.Runtime.asmdef
-│   │   ├── Editor/            # Custom inspectors, tooling
-│   │   │   APEX.Editor.asmdef
+│   │   │   ├── Camera/          # CameraFollow2D
+│   │   │   ├── Combat/          # Damage, Health, IDamageable, IPlayerTarget
+│   │   │   │   ├── Attacks/     # AttackDefinition + 4 attacks + instances + mutations
+│   │   │   │   │   └── Passive/ # PassiveMeleeStream
+│   │   │   │   └── Tags/        # TagDefinition, TagSet
+│   │   │   ├── Core/
+│   │   │   │   ├── Events/      # static C# EventBus
+│   │   │   │   └── Pooling/     # PrefabPool wrapper
+│   │   │   ├── Den/             # between-run shell (unbuilt)
+│   │   │   ├── Enemies/         # EnemyController + EnemyProjectile
+│   │   │   │   ├── AI/          # EnemyAIBehaviour + archetype AIs + ISwarmModifier
+│   │   │   │   ├── Data/        # EnemyDefinition, EraDefinition, SpawnEntry
+│   │   │   │   └── Spawning/    # EnemySpawner, EraDirector
+│   │   │   ├── Eras/            # (reserved for era-specific code)
+│   │   │   ├── Input/           # APEXControls (generated input class)
+│   │   │   ├── Player/          # PlayerController, PlayerCombat, PlayerStats
+│   │   │   ├── Progression/     # XP, PickPool, Passive/Hammer systems, RunManager, RunBootstrap
+│   │   │   ├── Testing/         # DebugDamageDealer, SandboxHUD
+│   │   │   ├── UI/              # ProgressionHUD, LevelUpScreen, RunEndScreen, PauseController, UIFactory, FloatingDamageNumbers
+│   │   │   ├── Utils/
+│   │   │   ├── World/           # ArenaBounds, BackgroundTiler
+│   │   │   └── APEX.Runtime.asmdef
+│   │   ├── Editor/              # SeedDataGenerator + custom inspectors
+│   │   │   └── APEX.Editor.asmdef
 │   │   └── Tests/
 │   │       ├── EditMode/
 │   │       └── PlayMode/
 │   └── Settings/
-│       ├── Input/             # InputActions asset
-│       ├── Rendering/         # URP asset, 2D renderer
+│       ├── Input/               # InputActions asset
+│       ├── Rendering/           # URP asset, 2D renderer
 │       └── Physics/
-└── Plugins/                   # third-party drop-ins (rare)
+└── Plugins/                     # third-party drop-ins (rare)
 ```
 
 ## Assembly definitions
 
-Start with a single runtime asmdef once the `Runtime/` folder has more than a couple of systems:
-
 - `APEX.Runtime.asmdef` — everything under `Scripts/Runtime/`
 - `APEX.Editor.asmdef` — `Scripts/Editor/`, references `APEX.Runtime`
-- `APEX.Tests.EditMode.asmdef` — `Scripts/Tests/EditMode/`, references `APEX.Runtime`
-- `APEX.Tests.PlayMode.asmdef` — `Scripts/Tests/PlayMode/`, references `APEX.Runtime`
+- `APEX.Tests.EditMode.asmdef` — reserved (tests not yet written)
+- `APEX.Tests.PlayMode.asmdef` — reserved
 
 Split further when a subsystem stabilizes and compile-time starts to feel sluggish.
 
 ## Core runtime shape
 
-A rough sketch of how the main systems relate. Concrete APIs will evolve.
+A rough sketch of how the main systems relate. Concrete APIs evolve with each session.
 
-- **Bootstrap** (scene or `[RuntimeInitializeOnLoadMethod]`) constructs singletons/services once: `EventBus`, `ObjectPool`, `TagRegistry`, `ContentCatalog`.
+- **RunBootstrap** (scene object) constructs the run-scoped state: instantiates the `RunManager`, HUD, pick screens, and pools for the current scene. `EventBus` handles are already static.
+- **RunManager** owns the run lifecycle: tracks elapsed time, triggers run-end on death or timer, aggregates stats, broadcasts `EventBus.OnRunEnded`.
 - **EraDirector** owns the active era: selects enemy archetypes, art swaps, spawn tables, music.
-- **Spawner** asks the EraDirector "what should I spawn right now?" on a fixed interval, pulls from `ObjectPool`.
-- **Player.Organism** holds stats; `Player.Movement` reads input; `Player.Combat` runs the four attack timers.
-- **Attacks** are data (ScriptableObjects) + one `IAttack` runtime that reads the data, emits hits, applies tags.
-- **Hits** flow through a small `Damage` record (source, tags, amount, crit) → target's `Health` → `EventBus.OnHit` / `OnKill`.
+- **EnemySpawner** asks the `EraDirector` "what should I spawn right now?" on a fixed interval, pulls from `PrefabPool`.
+- **PlayerController / PlayerCombat / PlayerStats** hold stats, read input, and run the four attack timers.
+- **Attacks** are ScriptableObjects (`AttackDefinition`) + an `IAttackInstance` runtime that reads the data, emits hits, applies tags. `AttackMutations` is the shared mutation API Hammers plug into.
+- **Hits** flow through a `Damage` struct (source, tags, amount, crit) → target's `Health` → `EventBus.OnHit` / `OnKill`.
+- **Progression**: `EnemyDrop` spawns `XPOrb`s on kill → `PlayerXP` accrues → `OnLevelUp` triggers `LevelUpScreen` → `PickRoller` pulls from `PickPool` using `PickTable` bands → pick is applied to `PlayerBuild` (via `PassiveApplier` or `HammerApplier`).
 - **Passives** subscribe to `EventBus` events and filter by tag.
-- **Hammers** mutate an attack's runtime config at pickup time; implementations live in `Progression/Hammers/`.
+- **Hammers** mutate an `AttackDefinition`'s runtime config when applied.
+- **UI**: `ProgressionHUD` shows the two-tier level+XP bar and run timer; `LevelUpScreen` and `RunEndScreen` are Canvas overlays toggled by events. `UIFactory` builds screens programmatically (no prefab dependency); `FloatingDamageNumbers` pools floating hit numbers.
 
 ## Data vs. code
 
 - **Data** — everything designer-tweakable: stat numbers, spawn weights, attack cooldowns, era palettes. Lives in `_Project/Data/` as ScriptableObjects.
 - **Code** — behavior, not numbers. If you find yourself typing a literal number into a `.cs` file that a designer would want to change, move it to a SO.
 
+Balance targets are maintained in `docs/balance.xlsx`; ScriptableObjects should mirror its values and be re-tuned from it.
+
 ## Naming
 
-- Namespaces mirror folders: `APEX.Combat.Attacks`, `APEX.Enemies.AI`, etc.
-- Prefabs: `P_Enemy_Primordial_Melee`, `P_Projectile_AcidSpit`, etc. (`P_` prefix so they sort together in Project view).
-- ScriptableObject assets: `SO_Attack_Lunge`, `SO_Enemy_Primordial_Melee`, `SO_Passive_TagSynergy_FireBurn`.
+- Namespaces mirror folders: `APEX.Combat.Attacks`, `APEX.Enemies.AI`, `APEX.Progression`, etc.
+- Prefabs: `P_Enemy_Primordial_Melee`, `P_Projectile_AcidSpit`, `P_XPOrb` (`P_` prefix so they sort together in Project view).
+- ScriptableObject assets: `SO_Attack_Lunge_Default`, `SO_Enemy_Primordial_Melee`, `SO_Passive_Ravenous`, `SO_Hammer_IgniteLunge`, `SO_Tag_Fire`.
 - Scenes: `PascalCase`, no prefix.
