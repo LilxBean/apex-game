@@ -54,6 +54,12 @@ namespace APEX.Player
                 _stats = Instantiate(_stats);
                 _health.Initialize(_stats.maxHp, default, default);
             }
+            else
+            {
+                Debug.LogError("[PlayerController] _stats is null on Awake — Health will not be initialized. Check prefab and scene serialization.");
+            }
+
+            Debug.Log($"[PlayerController] Awake: stats={(Stats != null ? Stats.name : "null")} maxHp={_health.MaxHp} currentHp={_health.CurrentHp}");
         }
 
         private void OnEnable()

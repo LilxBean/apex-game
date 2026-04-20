@@ -32,7 +32,10 @@ namespace APEX.Progression
         [SerializeField] private Vector2 _arenaSize = new(60f, 40f);
         [SerializeField] private float _cameraSmoothTime = 0.18f;
 
-        private void Awake()
+        // Wiring runs in Start rather than Awake so every scene component's Awake (notably
+        // PlayerController.Awake, which sets _health via GetComponent and calls Health.Initialize)
+        // has completed — otherwise _player.Health can observe null and the HUD binds to null.
+        private void Start()
         {
             if (_player == null)
             {
@@ -117,6 +120,16 @@ namespace APEX.Progression
             endGo.transform.SetParent(transform);
             var endScreen = endGo.AddComponent<RunEndScreen>();
             endScreen.Bind(runManager);
+
+            // Pause overlay (Escape).
+            var pauseGo = new GameObject("PauseController");
+            pauseGo.transform.SetParent(transform);
+            pauseGo.AddComponent<PauseController>();
+
+            // Floating damage numbers.
+            var dmgGo = new GameObject("FloatingDamageNumbers");
+            dmgGo.transform.SetParent(transform);
+            dmgGo.AddComponent<FloatingDamageNumbers>();
         }
 
         // Helper: set a private serialized field by reflection (safe at runtime; Bind methods
