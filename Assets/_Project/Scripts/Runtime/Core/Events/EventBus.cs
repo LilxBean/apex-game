@@ -2,7 +2,6 @@ using System;
 using APEX.Combat;
 using APEX.Enemies;
 using APEX.Player;
-using APEX.Progression;
 
 namespace APEX.Core.Events
 {
@@ -19,7 +18,10 @@ namespace APEX.Core.Events
         // Progression: amount gained, xp into current level, xp required for current level, fraction 0..1.
         public static event Action<int, int, int, float> OnXPGained;
         public static event Action<int> OnLevelUp;
+        public static event Action<PickKind> OnPickTaken;
         public static event Action<RunStats, EndReason> OnRunEnded;
+        public static event Action OnPaused;
+        public static event Action OnResumed;
 
         public static void RaiseDamaged(IDamageable target, Damage damage)
         {
@@ -51,9 +53,24 @@ namespace APEX.Core.Events
             OnLevelUp?.Invoke(newLevel);
         }
 
+        public static void RaisePickTaken(PickKind kind)
+        {
+            OnPickTaken?.Invoke(kind);
+        }
+
         public static void RaiseRunEnded(RunStats stats, EndReason reason)
         {
             OnRunEnded?.Invoke(stats, reason);
+        }
+
+        public static void RaisePaused()
+        {
+            OnPaused?.Invoke();
+        }
+
+        public static void RaiseResumed()
+        {
+            OnResumed?.Invoke();
         }
     }
 }

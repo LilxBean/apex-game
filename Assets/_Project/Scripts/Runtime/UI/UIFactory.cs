@@ -167,6 +167,68 @@ namespace APEX.UI
         }
 
         /// <summary>
+        /// Vertical-only scroll view with an auto-sizing content rect. Returns the root
+        /// (for placement / sizing) and the content rect (for adding children). Content
+        /// is laid out via VerticalLayoutGroup + ContentSizeFitter so callers just append
+        /// children at their natural size.
+        /// </summary>
+        public static (GameObject root, RectTransform content) CreateScrollView(Transform parent, Vector2 size)
+        {
+            var root = new GameObject("ScrollView", typeof(RectTransform), typeof(Image), typeof(ScrollRect));
+            root.transform.SetParent(parent, false);
+            var rt = (RectTransform)root.transform;
+            rt.sizeDelta = size;
+
+            var bg = root.GetComponent<Image>();
+            bg.color = new Color(1f, 1f, 1f, 0.04f);
+            bg.sprite = GetWhiteSprite();
+
+            var viewportGo = new GameObject("Viewport", typeof(RectTransform), typeof(Image), typeof(Mask));
+            viewportGo.transform.SetParent(root.transform, false);
+            var viewportRt = (RectTransform)viewportGo.transform;
+            viewportRt.anchorMin = Vector2.zero;
+            viewportRt.anchorMax = Vector2.one;
+            viewportRt.offsetMin = Vector2.zero;
+            viewportRt.offsetMax = Vector2.zero;
+            var viewportImg = viewportGo.GetComponent<Image>();
+            viewportImg.color = new Color(1f, 1f, 1f, 0.01f);
+            viewportImg.sprite = GetWhiteSprite();
+            var mask = viewportGo.GetComponent<Mask>();
+            mask.showMaskGraphic = false;
+
+            var contentGo = new GameObject("Content", typeof(RectTransform));
+            contentGo.transform.SetParent(viewportGo.transform, false);
+            var contentRt = (RectTransform)contentGo.transform;
+            contentRt.anchorMin = new Vector2(0f, 1f);
+            contentRt.anchorMax = new Vector2(1f, 1f);
+            contentRt.pivot = new Vector2(0.5f, 1f);
+            contentRt.anchoredPosition = Vector2.zero;
+            contentRt.sizeDelta = new Vector2(0f, 0f);
+
+            var layout = contentGo.AddComponent<VerticalLayoutGroup>();
+            layout.spacing = 4f;
+            layout.childAlignment = TextAnchor.UpperCenter;
+            layout.childControlWidth = true;
+            layout.childControlHeight = true;
+            layout.childForceExpandWidth = true;
+            layout.childForceExpandHeight = false;
+
+            var fitter = contentGo.AddComponent<ContentSizeFitter>();
+            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            var scroll = root.GetComponent<ScrollRect>();
+            scroll.horizontal = false;
+            scroll.vertical = true;
+            scroll.viewport = viewportRt;
+            scroll.content = contentRt;
+            scroll.movementType = ScrollRect.MovementType.Clamped;
+            scroll.scrollSensitivity = 24f;
+
+            return (root, contentRt);
+        }
+
+        /// <summary>
         /// Toggle with a square checkbox on the left and a label on the right. The label
         /// is raycast-disabled so only the checkbox hitbox consumes clicks.
         /// </summary>

@@ -114,7 +114,7 @@ namespace APEX.Progression
             runMgrGo.transform.SetParent(transform);
             var runManager = runMgrGo.AddComponent<RunManager>();
             SerializedAssign(runManager, "_runLengthSeconds", _runLengthSeconds);
-            runManager.Bind(xp);
+            runManager.Bind(xp, _player.Health);
 
             // HUD.
             var hudGo = new GameObject("ProgressionHUD");
@@ -132,12 +132,12 @@ namespace APEX.Progression
             var endGo = new GameObject("RunEndScreen");
             endGo.transform.SetParent(transform);
             var endScreen = endGo.AddComponent<RunEndScreen>();
-            endScreen.Bind(runManager);
 
             // Pause overlay (Escape).
             var pauseGo = new GameObject("PauseController");
             pauseGo.transform.SetParent(transform);
-            pauseGo.AddComponent<PauseController>();
+            var pause = pauseGo.AddComponent<PauseController>();
+            pause.Bind(runManager, endScreen, levelUp);
 
             // Floating damage numbers.
             var dmgGo = new GameObject("FloatingDamageNumbers");

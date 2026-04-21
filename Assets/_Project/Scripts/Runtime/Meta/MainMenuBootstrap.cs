@@ -69,6 +69,7 @@ namespace APEX.Meta
 
             var root = new GameObject("APEX_PersistentServices");
             root.AddComponent<SettingsService>();
+            root.AddComponent<StatsRecorder>();
             DontDestroyOnLoad(root);
         }
     }

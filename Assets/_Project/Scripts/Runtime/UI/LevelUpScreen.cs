@@ -24,6 +24,8 @@ namespace APEX.UI
         private readonly Queue<int> _pendingLevels = new();
         private bool _visible;
 
+        public bool IsOpen => _visible;
+
         public void Bind(PickTable table, PickPool pool, PlayerBuild build)
         {
             _pickTable = table;
@@ -79,8 +81,16 @@ namespace APEX.UI
         {
             if (opt.HasValue)
             {
-                if (opt.Value.IsHammer) _build.ApplyPick(opt.Value.hammer);
-                else _build.ApplyPick(opt.Value.passive);
+                if (opt.Value.IsHammer)
+                {
+                    _build.ApplyPick(opt.Value.hammer);
+                    EventBus.RaisePickTaken(PickKind.Hammer);
+                }
+                else
+                {
+                    _build.ApplyPick(opt.Value.passive);
+                    EventBus.RaisePickTaken(PickKind.Passive);
+                }
             }
 
             _root.SetActive(false);

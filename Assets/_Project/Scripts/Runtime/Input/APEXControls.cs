@@ -48,6 +48,15 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""11223344-5566-7788-9900-aabbccddeeff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -171,6 +180,28 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
                     ""action"": ""DebugAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""22334455-6677-8899-aabb-ccddeeff0011"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33445566-7788-99aa-bbcc-ddeeff001122"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -217,6 +248,7 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_DebugAttack = m_Gameplay.FindAction("DebugAttack", throwIfNotFound: true);
+        m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         // Combat
         m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
         m_Combat_Attack1 = m_Combat.FindAction("Attack1", throwIfNotFound: true);
@@ -295,6 +327,7 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Gameplay;
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_DebugAttack;
+    private readonly InputAction m_Gameplay_Pause;
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
 
     public struct GameplayActions
@@ -305,6 +338,7 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
 
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @DebugAttack => m_Wrapper.m_Gameplay_DebugAttack;
+        public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
 
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
 
@@ -325,6 +359,9 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
             @DebugAttack.started += instance.OnDebugAttack;
             @DebugAttack.performed += instance.OnDebugAttack;
             @DebugAttack.canceled += instance.OnDebugAttack;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -337,6 +374,9 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
                 @DebugAttack.started -= instance.OnDebugAttack;
                 @DebugAttack.performed -= instance.OnDebugAttack;
                 @DebugAttack.canceled -= instance.OnDebugAttack;
+                @Pause.started -= instance.OnPause;
+                @Pause.performed -= instance.OnPause;
+                @Pause.canceled -= instance.OnPause;
             }
         }
 
@@ -350,6 +390,9 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
                 @DebugAttack.started -= item.OnDebugAttack;
                 @DebugAttack.performed -= item.OnDebugAttack;
                 @DebugAttack.canceled -= item.OnDebugAttack;
+                @Pause.started -= item.OnPause;
+                @Pause.performed -= item.OnPause;
+                @Pause.canceled -= item.OnPause;
             }
             m_Wrapper.m_GameplayActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
@@ -362,6 +405,7 @@ public partial class @APEXControls : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnDebugAttack(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 
     // Combat
