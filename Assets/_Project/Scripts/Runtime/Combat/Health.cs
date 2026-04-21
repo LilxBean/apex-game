@@ -40,6 +40,19 @@ namespace APEX.Combat
             _currentHp = _maxHp;
         }
 
+        /// <summary>
+        /// Raise or lower max HP at runtime. When <paramref name="applyDelta"/> is true, the change
+        /// in max is added to current HP (so +5% Max HP also heals by that 5%).
+        /// </summary>
+        public void SetMaxHp(float newMax, bool applyDelta)
+        {
+            if (newMax <= 0f) return;
+            float delta = newMax - _maxHp;
+            _maxHp = newMax;
+            if (applyDelta) _currentHp = Mathf.Max(0f, _currentHp + delta);
+            _currentHp = Mathf.Min(_currentHp, _maxHp);
+        }
+
         public void Heal(float amount)
         {
             if (amount <= 0f || !IsAlive) return;

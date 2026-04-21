@@ -671,7 +671,49 @@ namespace APEX.Editor
                 PassiveKind.ConsumingWave, "[Nova] hits heal 1 HP per enemy hit.",
                 "Nova", "Heal"));
 
+            // Generic fallback picks — excluded from the base roll pool; surface only when real picks are exhausted.
+            list.Add(CreateGenericPassive("passive.endurance", "Endurance", Rarity.Epic,
+                PassiveKind.Endurance, "+5% Max HP", 0.05f, "Stat"));
+            list.Add(CreateGenericPassive("passive.ferocity", "Ferocity", Rarity.Epic,
+                PassiveKind.Ferocity, "+5% Damage", 0.05f, "Stat", "DamageMult"));
+
             return list;
+        }
+
+        private static PassiveDefinition CreateGenericPassive(string id, string displayName,
+            Rarity rarity, PassiveKind kind, string description, float magnitude, params string[] tagIds)
+        {
+            EnsureFolder("Assets/_Project/Data/Passives/Generic");
+            string safeName = displayName.Replace(" ", "");
+            string path = $"Assets/_Project/Data/Passives/Generic/P_{safeName}.asset";
+            var existing = AssetDatabase.LoadAssetAtPath<PassiveDefinition>(path);
+            if (existing != null)
+            {
+                existing.id = id;
+                existing.displayName = displayName;
+                existing.rarity = rarity;
+                existing.kind = kind;
+                existing.description = description;
+                existing.tags = BuildTagSet(tagIds);
+                existing.magnitude = magnitude;
+                existing.IsGeneric = true;
+                existing.maxStacks = int.MaxValue;
+                EditorUtility.SetDirty(existing);
+                return existing;
+            }
+
+            var p = ScriptableObject.CreateInstance<PassiveDefinition>();
+            p.id = id;
+            p.displayName = displayName;
+            p.rarity = rarity;
+            p.kind = kind;
+            p.description = description;
+            p.tags = BuildTagSet(tagIds);
+            p.magnitude = magnitude;
+            p.IsGeneric = true;
+            p.maxStacks = int.MaxValue;
+            AssetDatabase.CreateAsset(p, path);
+            return p;
         }
 
         private static PassiveDefinition CreatePassive(string id, string displayName,

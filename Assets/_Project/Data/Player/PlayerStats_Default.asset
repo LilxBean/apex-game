@@ -22,4 +22,5 @@ MonoBehaviour:
     _tags:
     - {fileID: 11400000, guid: bd1eb9326896d7a4db46004baad4f011, type: 2}
     - {fileID: 11400000, guid: c4a8a612673347041a6a5956d2ebc627, type: 2}
+  globalDamageMultiplier: 1
   _damageMultipliers: []

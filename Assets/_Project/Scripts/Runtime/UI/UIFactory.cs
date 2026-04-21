@@ -217,6 +217,8 @@ namespace APEX.UI
             fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
             fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
+            var scrollbar = BuildVerticalScrollbar(root.transform);
+
             var scroll = root.GetComponent<ScrollRect>();
             scroll.horizontal = false;
             scroll.vertical = true;
@@ -224,8 +226,57 @@ namespace APEX.UI
             scroll.content = contentRt;
             scroll.movementType = ScrollRect.MovementType.Clamped;
             scroll.scrollSensitivity = 24f;
+            scroll.verticalScrollbar = scrollbar;
+            scroll.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;
+            scroll.verticalScrollbarSpacing = 0f;
 
             return (root, contentRt);
+        }
+
+        // Thin vertical scrollbar anchored to the scroll root's right edge. Built to match the
+        // runtime white-sprite style used elsewhere in this factory; no prefabs.
+        private static Scrollbar BuildVerticalScrollbar(Transform scrollRoot)
+        {
+            const float width = 10f;
+
+            var barGo = new GameObject("Scrollbar Vertical",
+                typeof(RectTransform), typeof(Image), typeof(Scrollbar));
+            barGo.transform.SetParent(scrollRoot, false);
+            var barRt = (RectTransform)barGo.transform;
+            barRt.anchorMin = new Vector2(1f, 0f);
+            barRt.anchorMax = new Vector2(1f, 1f);
+            barRt.pivot = new Vector2(1f, 0.5f);
+            barRt.sizeDelta = new Vector2(width, 0f);
+            barRt.anchoredPosition = Vector2.zero;
+
+            var barImg = barGo.GetComponent<Image>();
+            barImg.sprite = GetWhiteSprite();
+            barImg.color = new Color(1f, 1f, 1f, 0.08f);
+
+            var slidingArea = new GameObject("Sliding Area", typeof(RectTransform));
+            slidingArea.transform.SetParent(barGo.transform, false);
+            var slideRt = (RectTransform)slidingArea.transform;
+            slideRt.anchorMin = Vector2.zero;
+            slideRt.anchorMax = Vector2.one;
+            slideRt.offsetMin = new Vector2(1f, 1f);
+            slideRt.offsetMax = new Vector2(-1f, -1f);
+
+            var handleGo = new GameObject("Handle", typeof(RectTransform), typeof(Image));
+            handleGo.transform.SetParent(slidingArea.transform, false);
+            var handleRt = (RectTransform)handleGo.transform;
+            handleRt.anchorMin = Vector2.zero;
+            handleRt.anchorMax = Vector2.one;
+            handleRt.offsetMin = Vector2.zero;
+            handleRt.offsetMax = Vector2.zero;
+            var handleImg = handleGo.GetComponent<Image>();
+            handleImg.sprite = GetWhiteSprite();
+            handleImg.color = new Color(1f, 1f, 1f, 0.55f);
+
+            var scrollbar = barGo.GetComponent<Scrollbar>();
+            scrollbar.targetGraphic = handleImg;
+            scrollbar.handleRect = handleRt;
+            scrollbar.direction = Scrollbar.Direction.BottomToTop;
+            return scrollbar;
         }
 
         /// <summary>

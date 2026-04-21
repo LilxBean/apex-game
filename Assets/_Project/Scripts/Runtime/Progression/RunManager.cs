@@ -14,7 +14,7 @@ namespace APEX.Progression
     /// </summary>
     public class RunManager : MonoBehaviour
     {
-        [SerializeField] private float _runLengthSeconds = 15f * 60f;
+        [SerializeField] private float _runLengthSeconds = 5f * 60f;
         [SerializeField] private PlayerXP _playerXP;
 
         private Health _playerHealth;

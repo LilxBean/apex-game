@@ -27,7 +27,7 @@ namespace APEX.Progression
         [SerializeField] private GameObject _xpOrbPrefab;
 
         [Header("Run Tuning")]
-        [SerializeField] private float _runLengthSeconds = 15f * 60f;
+        [SerializeField] private float _runLengthSeconds = 5f * 60f;
 
         [Header("World")]
         [SerializeField] private Vector2 _arenaSize = new(60f, 40f);
@@ -38,6 +38,8 @@ namespace APEX.Progression
         // has completed — otherwise _player.Health can observe null and the HUD binds to null.
         private void Start()
         {
+            PickRoller.ResetForNewRun();
+
             var request = SceneLoader.ConsumePendingRequest();
             if (request == null)
             {

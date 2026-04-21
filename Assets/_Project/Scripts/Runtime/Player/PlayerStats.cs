@@ -23,6 +23,10 @@ namespace APEX.Player
         public float passiveBiteDamage = 3f;
         public TagSet passiveBiteTags;
 
+        [Header("Damage Multipliers")]
+        [Tooltip("Global damage multiplier applied to every attack regardless of tags.")]
+        public float globalDamageMultiplier = 1f;
+
         [Header("Damage Multipliers (by tag)")]
         [SerializeField] private List<TagMultiplier> _damageMultipliers = new();
 
@@ -32,7 +36,7 @@ namespace APEX.Player
         /// </summary>
         public float GetMultiplierFor(TagSet attackTags)
         {
-            float result = 1f;
+            float result = globalDamageMultiplier;
             for (int i = 0; i < _damageMultipliers.Count; i++)
             {
                 var entry = _damageMultipliers[i];

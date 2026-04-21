@@ -729,7 +729,7 @@ MonoBehaviour:
   _pickTable: {fileID: 11400000, guid: 66a4074c91970f049b9fc2c6966735eb, type: 2}
   _pickPool: {fileID: 11400000, guid: d0a3313429ea50240b700e87ca7709a5, type: 2}
   _xpOrbPrefab: {fileID: 2322976992500262666, guid: 7863fa6918fd1fe41849f6a5781c53f4, type: 3}
-  _runLengthSeconds: 900
+  _runLengthSeconds: 300
   _arenaSize: {x: 60, y: 40}
   _cameraSmoothTime: 0.18
 --- !u!4 &1321656346

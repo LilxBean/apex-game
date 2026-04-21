@@ -17,7 +17,7 @@ namespace APEX.Meta
         public static StatsRecorder Instance { get; private set; }
 
         private const string FileName = "stats.json";
-        private const int SchemaVersion = 1;
+        public const int SchemaVersion = 1;
 
         private StatsFile _file;
 
@@ -76,12 +76,10 @@ namespace APEX.Meta
                 return NewFile();
             }
 
+            StatsFile parsed;
             try
             {
-                var parsed = JsonUtility.FromJson<StatsFile>(json);
-                if (parsed == null) throw new Exception("null after parse");
-                parsed.records ??= new List<RunRecord>();
-                return parsed;
+                parsed = JsonUtility.FromJson<StatsFile>(json);
             }
             catch (Exception e)
             {
@@ -89,6 +87,19 @@ namespace APEX.Meta
                 Quarantine();
                 return NewFile();
             }
+
+            // JsonUtility.FromJson is permissive: it returns a default-constructed object for
+            // many malformed inputs rather than throwing. Validate the shape explicitly so
+            // silent corruption (e.g. missing version, truncated structure) still quarantines.
+            if (parsed == null || parsed.version != SchemaVersion || parsed.records == null)
+            {
+                Debug.LogWarning(
+                    "[APEX] stats.json failed validation after parse — version or records missing. Quarantining.");
+                Quarantine();
+                return NewFile();
+            }
+
+            return parsed;
         }
 
         private void Save()
@@ -121,7 +132,7 @@ namespace APEX.Meta
         private static StatsFile NewFile() => new() { version = SchemaVersion, records = new List<RunRecord>() };
 
         [Serializable]
-        private class StatsFile
+        public class StatsFile
         {
             public int version;
             public List<RunRecord> records;

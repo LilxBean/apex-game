@@ -16,7 +16,9 @@ namespace APEX.Progression
         ApexHunger,
         SwarmRend,
         Voidburst,
-        ConsumingWave
+        ConsumingWave,
+        Endurance,
+        Ferocity
     }
 
     /// <summary>
@@ -33,5 +35,11 @@ namespace APEX.Progression
         public TagSet tags;
         public PassiveKind kind;
         public int maxStacks = 1;
+
+        /// <summary>Fraction used by magnitude-driven kinds (Endurance, Ferocity). 0.05 = +5% per stack.</summary>
+        public float magnitude = 0f;
+
+        /// <summary>Generic fallback picks are excluded from the normal roll pool and only appear when the real pool is exhausted.</summary>
+        public bool IsGeneric = false;
     }
 }

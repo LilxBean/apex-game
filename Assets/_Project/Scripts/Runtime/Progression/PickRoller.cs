@@ -19,6 +19,15 @@ namespace APEX.Progression
             public string Description => hammer != null ? hammer.description : passive.description;
         }
 
+        // Per-run, alternates HP/ATK across generic slots (even → HP, odd → ATK).
+        // Increments per generic SLOT FILLED, not per selection. Reset at run start.
+        private static int _genericCounter;
+
+        public static void ResetForNewRun()
+        {
+            _genericCounter = 0;
+        }
+
         public static List<PickOption> RollPicks(
             int level, int count, PickTable table, PickPool pool, PlayerBuild build)
         {
@@ -55,9 +64,40 @@ namespace APEX.Progression
                 }
 
                 if (opt != null) result.Add(opt.Value);
+                else break; // real pool exhausted — remaining slots filled with generics below.
+            }
+
+            // Fill any remaining slots with alternating generic HP/ATK picks.
+            int genericsUsed = 0;
+            while (result.Count < count)
+            {
+                bool wantHp = (_genericCounter % 2 == 0);
+                var generic = FindGeneric(pool, wantHp ? PassiveKind.Endurance : PassiveKind.Ferocity);
+                if (generic == null) break; // generic asset missing — nothing else to do.
+
+                result.Add(new PickOption { passive = generic });
+                _genericCounter++;
+                genericsUsed++;
+            }
+
+            if (genericsUsed > 0)
+            {
+                Debug.Log($"[APEX] Pick pool exhausted at level {level}, filled {genericsUsed} slots with generics.");
             }
 
             return result;
+        }
+
+        private static PassiveDefinition FindGeneric(PickPool pool, PassiveKind kind)
+        {
+            for (int i = 0; i < pool.passives.Count; i++)
+            {
+                var p = pool.passives[i];
+                if (p == null) continue;
+                if (!p.IsGeneric) continue;
+                if (p.kind == kind) return p;
+            }
+            return null;
         }
 
         private static Rarity RollRarity(PickTable.LevelBand band)
@@ -76,6 +116,7 @@ namespace APEX.Progression
             {
                 var p = pool.passives[i];
                 if (p == null) continue;
+                if (p.IsGeneric) continue; // generics only appear as fallback, never in the base roll.
                 if (used.Contains(p)) continue;
                 if (!build.CanPick(p)) continue;
                 if (rarity.HasValue && p.rarity != rarity.Value) continue;

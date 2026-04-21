@@ -53,6 +53,22 @@ namespace APEX.Progression
                     }
                     break;
 
+                case PassiveKind.Endurance:
+                {
+                    float factor = 1f + Mathf.Max(0f, passive.magnitude);
+                    stats.maxHp *= factor;
+                    var hp = build.GetComponent<Health>();
+                    if (hp != null) hp.SetMaxHp(stats.maxHp, applyDelta: true);
+                    break;
+                }
+
+                case PassiveKind.Ferocity:
+                {
+                    float factor = 1f + Mathf.Max(0f, passive.magnitude);
+                    stats.globalDamageMultiplier *= factor;
+                    break;
+                }
+
                 case PassiveKind.ApexHunger:
                     build.XP.AddXPMultiplier(1.20f);
                     break;
