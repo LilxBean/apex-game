@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using APEX.Core.Events;
+using APEX.Meta;
 using APEX.Progression;
 using TMPro;
 using UnityEngine;
@@ -58,6 +59,15 @@ namespace APEX.UI
             int level = _pendingLevels.Dequeue();
 
             var picks = PickRoller.RollPicks(level, CardCount, _pickTable, _pickPool, _build);
+
+            if (ShouldAutoSelect(picks))
+            {
+                Debug.Log($"[APEX] Auto-selected generic pick at level {level}.");
+                ApplyPickOption(picks[0]);
+                if (_pendingLevels.Count > 0) ShowNext();
+                return;
+            }
+
             for (int i = 0; i < _cards.Length; i++)
             {
                 if (i < picks.Count) _cards[i].Bind(picks[i], OnCardClicked);
@@ -67,6 +77,34 @@ namespace APEX.UI
             _root.SetActive(true);
             _visible = true;
             Time.timeScale = 0f;
+        }
+
+        private static bool ShouldAutoSelect(List<PickRoller.PickOption> picks)
+        {
+            if (picks == null || picks.Count == 0) return false;
+            var service = SettingsService.Instance;
+            if (service == null || !service.Store.autoSelectGenericPicks) return false;
+            for (int i = 0; i < picks.Count; i++)
+            {
+                var opt = picks[i];
+                if (opt.IsHammer) return false;
+                if (opt.passive == null || !opt.passive.IsGeneric) return false;
+            }
+            return true;
+        }
+
+        private void ApplyPickOption(PickRoller.PickOption opt)
+        {
+            if (opt.IsHammer)
+            {
+                _build.ApplyPick(opt.hammer);
+                EventBus.RaisePickTaken(PickKind.Hammer);
+            }
+            else
+            {
+                _build.ApplyPick(opt.passive);
+                EventBus.RaisePickTaken(PickKind.Passive);
+            }
         }
 
         private void Hide()

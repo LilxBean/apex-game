@@ -14,11 +14,13 @@ namespace APEX.Progression
     /// </summary>
     public class RunManager : MonoBehaviour
     {
-        [SerializeField] private float _runLengthSeconds = 5f * 60f;
+        [SerializeField] private RunConfig _runConfig;
         [SerializeField] private PlayerXP _playerXP;
 
         private Health _playerHealth;
         private float _runTime;
+        private float _runDurationLimit;
+        private bool _runLengthResolved;
         private bool _ended;
 
         private RunStats _stats;
@@ -56,12 +58,25 @@ namespace APEX.Progression
         private void Update()
         {
             if (_ended) return;
+            if (!_runLengthResolved)
+            {
+                if (_runConfig == null)
+                {
+                    Debug.LogError("[APEX] RunConfig not wired on " + GetType().Name + "; falling back to 300s run length.");
+                    _runDurationLimit = 300f;
+                }
+                else
+                {
+                    _runDurationLimit = _runConfig.RunLengthSeconds;
+                }
+                _runLengthResolved = true;
+            }
             _runTime += Time.deltaTime;
 
             _dpsWindow.Tick(_runTime, _frameDamage);
             _frameDamage = 0f;
 
-            if (_runTime >= _runLengthSeconds)
+            if (_runTime >= _runDurationLimit)
             {
                 bool playerAlive = _playerHealth == null || _playerHealth.IsAlive;
                 EndRun(playerAlive ? EndReason.Victory : EndReason.Defeat);

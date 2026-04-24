@@ -77,6 +77,12 @@ namespace APEX.UI
                 store.vsync = isOn;
                 service.Apply();
             });
+            BuildToggleRow(column.transform, "Auto-select generic level-up picks", store.autoSelectGenericPicks, isOn =>
+            {
+                store.autoSelectGenericPicks = isOn;
+                service.Apply();
+                service.Save();
+            });
 
             BuildBackButton();
         }

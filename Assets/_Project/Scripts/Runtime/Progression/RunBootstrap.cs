@@ -1,4 +1,5 @@
 using APEX.CameraRig;
+using APEX.Core;
 using APEX.Enemies.Spawning;
 using APEX.Meta;
 using APEX.Player;
@@ -27,7 +28,7 @@ namespace APEX.Progression
         [SerializeField] private GameObject _xpOrbPrefab;
 
         [Header("Run Tuning")]
-        [SerializeField] private float _runLengthSeconds = 5f * 60f;
+        [SerializeField] private RunConfig _runConfig;
 
         [Header("World")]
         [SerializeField] private Vector2 _arenaSize = new(60f, 40f);
@@ -38,6 +39,11 @@ namespace APEX.Progression
         // has completed — otherwise _player.Health can observe null and the HUD binds to null.
         private void Start()
         {
+            if (_runConfig == null)
+            {
+                Debug.LogError("[APEX] RunConfig not wired on " + GetType().Name + "; falling back to 300s run length.");
+            }
+
             PickRoller.ResetForNewRun();
 
             var request = SceneLoader.ConsumePendingRequest();
@@ -115,7 +121,7 @@ namespace APEX.Progression
             var runMgrGo = new GameObject("RunManager");
             runMgrGo.transform.SetParent(transform);
             var runManager = runMgrGo.AddComponent<RunManager>();
-            SerializedAssign(runManager, "_runLengthSeconds", _runLengthSeconds);
+            SerializedAssign(runManager, "_runConfig", _runConfig);
             runManager.Bind(xp, _player.Health);
 
             // HUD.

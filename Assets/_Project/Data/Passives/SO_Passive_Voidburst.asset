@@ -22,3 +22,5 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 9144c7fd71c23c348a42216659697d39, type: 2}
   kind: 10
   maxStacks: 1
+  magnitude: 0
+  IsGeneric: 0

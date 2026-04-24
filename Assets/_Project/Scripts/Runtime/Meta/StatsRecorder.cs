@@ -120,7 +120,27 @@ namespace APEX.Meta
             try
             {
                 string ts = DateTime.UtcNow.ToString("yyyyMMdd-HHmmss");
-                string corruptPath = FilePath + ".corrupt." + ts;
+                string basePath = FilePath + ".corrupt." + ts;
+                string corruptPath = basePath;
+                if (File.Exists(corruptPath))
+                {
+                    bool resolved = false;
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        corruptPath = basePath + "." + i;
+                        if (!File.Exists(corruptPath))
+                        {
+                            resolved = true;
+                            break;
+                        }
+                    }
+                    if (!resolved)
+                    {
+                        Debug.LogError(
+                            $"[APEX] stats.json quarantine failed: exhausted 10 collision suffixes for {basePath}. Leaving original in place.");
+                        return;
+                    }
+                }
                 File.Move(FilePath, corruptPath);
             }
             catch (Exception e)

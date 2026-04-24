@@ -15,6 +15,7 @@ namespace APEX.Meta
         public float masterVolume = 1f;
         public bool fullscreen = true;
         public bool vsync = true;
+        public bool autoSelectGenericPicks = false;
 
         private const string FileName = "settings.json";
 

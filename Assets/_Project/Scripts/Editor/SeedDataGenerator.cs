@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using APEX.Combat.Attacks;
+using APEX.Core;
 using APEX.Enemies.AI;
 using APEX.Enemies.Data;
 using APEX.Player;
@@ -26,6 +27,7 @@ namespace APEX.Editor
             GenerateEraDefinition();
             GeneratePlayerAndAttacks();
             GenerateProgression();
+            GenerateRunConfig();
             WireEnemyDrops();
 
             AssetDatabase.SaveAssets();
@@ -884,6 +886,19 @@ namespace APEX.Editor
             xpSO.ApplyModifiedPropertiesWithoutUndo();
 
             if (root.GetComponent<PlayerBuild>() == null) root.AddComponent<PlayerBuild>();
+        }
+
+        private static void GenerateRunConfig()
+        {
+            EnsureFolder("Assets/_Project/Data/Config");
+
+            string path = "Assets/_Project/Data/Config/RunConfig.asset";
+            var existing = AssetDatabase.LoadAssetAtPath<RunConfig>(path);
+            if (existing != null) return;
+
+            var cfg = ScriptableObject.CreateInstance<RunConfig>();
+            cfg.RunLengthSeconds = 300f;
+            AssetDatabase.CreateAsset(cfg, path);
         }
 
         private static void WireEnemyDrops()
